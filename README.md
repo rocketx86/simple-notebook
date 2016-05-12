@@ -24,7 +24,7 @@ Simple Notebook data files are portable because they are plain text files. Your 
 ## Installation
 
 *Source*  
-	$ git clone git@github:rocketx86/simple-notebook
+	$ git clone git@github.com:rocketx86/simple-notebook
 
 *Build*  
 	$ cd simple-notebook  

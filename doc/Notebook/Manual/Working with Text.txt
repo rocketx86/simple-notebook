@@ -1,0 +1,29 @@
+Working with Text
+
+An entry's text is displayed in the text pane on the right. When an entry is selected, the text pane starts in view mode. The focus can be switched to the text pane for editing by pressing [TAB], [ENTER], double clicking on an entry, or clicking in the text pane. After entering edit mode, text can be entered in the text pane and the basic text editing commands are available. You can save by pressing [CTRL+S]. Edit mode can be exited by pressing [SHIFT+ENTER]. The text is automatically saved upon exit or changing to another entry. Text is managed using the text menu. The text menu contains the commands available for text editing. The text menu can be opened from the menu bar or can be opened by right clicking in the text pane.
+
+The text menu has the following options:
+
+Replace Text
+The entry's text can be searched and replaced by pressing [CTRL+F], or by selecting the replace text option from the text menu. Each time the find button or the replace button is pressed within the dialog, the next text string matching the criteria is selected. When there are no more matches, a message is displayed stating that the search is complete. You may also choose to replace all the matches at once by pressing the replace all button.
+
+Undo Change
+After making modifications to the entry's text, you can undo your change by pressing [CTRL+Z] or by selecting the undo change option on the text menu.
+
+Redo Change
+You can redo an undone change by pressing [CTRL+Y] or by selecting the redo change option on the text menu.
+
+Select All Text
+To select all text at once press [CTRL+A] or select the select all text option from the text menu.
+
+Cut Text
+To cut text so you can move it to another location, select the text, and then press [CTRL+X] or select the cut text option on the text menu.
+
+Copy Text
+To copy text so you can paste it in another location, select the text, and then press [CTRL+C] or select the copy text option on the text menu.
+
+Paste Text
+To paste text you have cut or copied, place the cursor where you want to paste the text, and then press [CTRL+V] or select the paste text option on the text menu.
+
+Delete Text
+To delete text, select the text, and then press [DEL] or select the delete text option on the text menu.

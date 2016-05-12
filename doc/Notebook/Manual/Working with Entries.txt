@@ -1,0 +1,44 @@
+Working with Entries
+
+Entries are displayed in the lower left-hand listbox. Entries are the primary unit for organizing notes in the notebook. There is practically no limit to the number of entries that can be contained in a section. Entries are managed using the entry menu. The entry menu contains the commands available on entries. The entry menu can be opened from the menu bar or can be opened by right clicking in the entries area. Entries are stored as text files in the corresponding section's sub-folder. Changes to entries are saved automatically.
+
+The entry menu has the following options:
+
+Select Entry
+The current entry can be changed by pressing the [UP] and [DOWN] keys or by clicking the left mouse button on the entry. When the selected entry changes, the text pane is updated with the associated text of the selected entry. To switch to edit mode, double click the entry, or press [ENTER]. When edit mode is enabled, the focus switches to the text pane and the cursor is positioned for editing. (See Working with Text)
+
+Shift Entry
+An entry can be shifted in the order by pressing [SHIFT+UP] or [SHIFT+DOWN], or by dragging the entry with the left mouse button while holding down the [SHIFT] key. This enables entries to be ordered in the section.
+
+Create Entry
+A new entry can be created by pressing the [SHIFT+F9] key, the [SHIFT+INS] key, or selecting the create entry option from the entry menu. New entries are inserted above the selected entry. Upon creating a new entry, the entry will automatically enter edit mode. (See Working with Text) If the auto name mode is disabled (option), you will be prompted for a new entry name before being placed into edit mode. If the auto name mode is enabled, you will be prompted to enter a new name for the entry when exiting edit mode. (See Rename Entry)
+
+Rename Entry
+An entry can be renamed at any time by pressing the [SHIFT+F10] key, or by selecting the rename entry option from the entry menu. You will be prompted to enter a new name for the entry. The entry name must be a valid file name and must not contain [ \ / : * ? " > < | ]. You must enter an entry name that is unique within the section.
+
+Copy Entry
+An entry can be copied into another open notebook section by pressing [SHIFT+F11], or by selecting the copy entry option from the entry menu. You will be prompted to select a notebook section to copy the entry to. An entry can also be copied between sections of the current notebook by dragging the entry with the left mouse button while holding down the [CTRL] key and then dropping it on the section to copy the entry to. The currently selected section will not change. The selected entry will be copied to the new section and inserted at the beginning of the entry list.
+
+Move Entry
+An entry can be moved between sections of open notebooks by pressing [CTRL+SHIFT+F11], or by selecting the move entry option from the entry menu. You will be prompted to select a notebook section to move the entry to. An entry can also be moved between sections of the current notebook by dragging the entry with the left mouse button while holding down the [CTRL+SHIFT] keys and then dropping it on the section to move the entry to. The currently selected section will not change. The selected entry will be moved to the new section and inserted at the beginning of the entry list.
+
+Trash Entry
+An entry can be trashed by pressing the [SHIFT+F12] key, the [SHIFT+DEL] key, or by selecting the trash entry option from the entry menu. You will be prompted for confirmation to trash the entry. The entry is moved to the trash section. Entries can be restored by moving them from the trash section to another section before the clean trash option is used.
+
+Delete Entry
+An entry can be deleted by pressing the [CTRL+SHIFT+F12] keys, the [CTRL+SHIFT+DEL] keys, or by selecting the delete entry option from the entry menu. You will be prompted for confirmation to permanently delete the entry.
+
+Back History
+Navigate to a previously edited or viewed entry by pressing [ALT+LEFT], or by selecting the back history option from the entry menu.
+
+Forward History
+Navigate to a formerly edited or viewed entry by pressing [ALT+RIGHT], or by selecting the forward history option from the entry menu.
+
+Bookmark Entry
+The currently selected entry can be bookmarked by pressing [CTRL+SHIFT+(1-9)], or by selecting the bookmark entry option from the entry menu. The entry will be assigned one of 9 bookmarks. If a previous entry was bookmarked by that number, then the bookmark will be reassigned. A bookmark can be cleared by pressing [CTRL+ALT+(1-9)]. A bookmarked entry can be recalled by pressing [CTRL+(1-9)].
+
+Search for Entry
+You can search for an entry by name by pressing the [CTRL+L], or by selecting the search for entry option from the entry menu. You will be prompted with a dialog to enter the search criteria. The entry names of all open notebooks will be searched. Each time the search button is pressed within the dialog, the next entry matching the criteria is selected. When there are no more matches, the search dialog box displays a message that the search is complete.
+
+Print Entry
+An entry can be printed by pressing [CTRL+P], or by selecting the print entry option from the entry menu. You will be prompted with the standard print dialog. You may print the entire entry or the selected text.

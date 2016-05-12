@@ -1,0 +1,44 @@
+Working with Notebooks
+
+Notebooks are displayed as tabs along the top of the work area. There is practically no limit to the number of notebooks that can be managed. Each notebook name is displayed on a separate tab. The active notebook can be changed by clicking on the notebook's tab. When the program is started, the previously open notebooks are opened. Each notebook must have a unique name among other notebooks. Notebooks are managed with the notebook menu. The notebook menu contains the commands available on notebooks. The notebook menu can be opened from the menu bar or it can be opened by right clicking in the notebook tab area.
+
+The notebook menu has the following options:
+
+Select Notebook
+The active notebook can be changed by clicking the left mouse button on the notebook tab or by pressing the [CTRL+LEFT] or [CTRL+RIGHT] keys. When the selected notebook changes, the section list is updated with the sections within the selected notebook.
+
+Shift Notebook
+A notebook can be shifted in the order by pressing [CTRL+SHIFT+LEFT] or [CTRL+SHIFT+RIGHT], or by dragging the notebook tab with the left mouse button while holding down the [CTRL+SHIFT] keys. This enables notebooks to be ordered.
+
+Create Notebook
+A new notebook can be created by pressing [SHIFT+F1], or by selecting the create notebook option from the notebook menu. A new notebook will be created and you will be prompted for a new notebook name. (See Rename Notebook) New notebooks are created without any sections, so a new section must be created before entries can be created. (See Working with Sections)
+
+Rename Notebook
+The active notebook can be renamed by pressing [SHIFT+F2], or by selecting the rename notebook option from the notebook menu. You must first open and activate a notebook before renaming it. The notebook name must be a valid directory name and must not contain [ \ / : * ? " > < | ]. You must enter a notebook name that is unique name among other notebooks.
+
+Open Notebook
+A notebook can be opened by pressing [SHIFT+F3], or by selecting the open notebook option from the notebook menu. You will be presented with a list of notebooks available to open. Upon selection of a notebook, the notebook will be opened and activated in a new tab.
+
+Close Notebook
+The active notebook can be closed by pressing [SHIFT+F4], or by selecting the close notebook option from the notebook menu.
+
+Delete Notebook
+The active notebook can be deleted by pressing [CTRL+SHIFT+F4], or by selecting the delete notebook option from the notebook menu. You will be prompted for confirmation to delete the notebook. The Notebook and all of its sections and entries will be permanently deleted.
+
+View History
+You can view the list of history items by pressing [CTRL+H], or by selecting the view history option from the notebook menu. Each notebook maintains a separate history list. History is stored permanently and is available each time the notebook is opened. Selecting a history item will select the section and entry.
+
+Clear History
+You can clear the history list by pressing [CTRL+J], or by selecting the clear history option from the notebook menu. You will be prompted for confirmation to clear history. Upon confirmation, the history will be cleared and the options to view history will be disabled until new entries are added or modified.
+
+View Bookmarks
+You can view the list of bookmarks by pressing [CTRL+B], or by selecting the view bookmarks option from the notebook menu. Each notebook maintains separate bookmarks. Bookmarks are stored permanently and are available each time the notebook is opened. A bookmarked entry can be recalled by pressing [CTRL+(1-9)]. The selected entry can be bookmarked by pressing [CTRL+SHIFT+(1-9)]. The entry will be assigned one of 9 bookmarks. If a previous entry was bookmarked by that number, then the bookmark will be reassigned.
+
+Clear Bookmarks
+You can clear the bookmark list by pressing [CTRL+N], or by selecting the clear bookmarks option from the notebook menu. You will be prompted for confirmation to clear the bookmarks. Upon confirmation, the bookmarks will be cleared. A bookmark can be cleared by pressing [CTRL+ALT+(1-9)].
+
+Print Notebook
+A notebook can be printed by pressing [CTRL+ALT+P], or by selecting the print notebook option from the notebook menu. You will be prompted with the standard print dialog. All sections in the notebook will be printed in their current order. All sections will be printed except for the trash section.
+
+Exit Notebook
+The notebook program can be exited by pressing [ESC], or by selecting the exit notebook option from the notebook menu.

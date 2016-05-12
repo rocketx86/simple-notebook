@@ -1,0 +1,35 @@
+Working with Sections
+
+Sections are displayed in the upper left-hand listbox. Sections are the primary unit for organizing entries in the notebook. There is practically no limit to the number of sections that can be managed in a notebook. Sections are managed using the section menu. The section menu contains the commands available on sections. The section menu can be opened from the menu bar or can be opened by right clicking in the sections area. The trash section is a special section for trashed entries. Sections are stored as sub-folders in the notebook folder. All changes to sections are saved automatically.
+
+The section menu has the following options:
+
+Select Section
+The current section can be changed by pressing the [LEFT] and [RIGHT] keys or by clicking the left mouse button on the section. When the selected section changes, the entries list is updated with the entries associated with the selected section.
+
+Shift Section
+A section can be shifted in the order by pressing [SHIFT+LEFT] or [SHIFT+RIGHT], or by dragging the section with the left mouse button while holding down the [SHIFT] key. This enables sections to be ordered in the notebook.
+
+Create Section
+A new section can be created by pressing the [SHIFT+F5] key or selecting the create section option from the section menu. New sections are inserted above the selected section. Upon creating a new section you will be prompted to enter a new name for the section. (See Rename Section) New sections are created without any entries, so a new entry must be created before text can be entered. (See Working with Entries)
+
+Rename Section
+A section can be renamed at any time by pressing the [SHIFT+F6] key or by selecting the rename section option from the section menu. You will be prompted to enter a new name for the section. The section name must be a valid directory name and must not contain [ \ / : * ? " > < | ]. You must enter a section name that is unique to the notebook. The trash section is a special section for trashed entries and cannot be renamed.
+
+Copy Section
+A section can be copied to another open notebook by pressing [SHIFT+F7] or by selecting the copy section option from the section menu. This option is disabled if there is only a single notebook open. After selecting this option, you will be prompted to select an open notebook to copy the section to. The currently selected notebook will not change. The section will be copied to the new notebook and inserted at the top of the section list. The trash section is a special section for trashed entries and cannot be copied.
+
+Move Section
+A section can be moved to another open notebook by pressing [CTRL+SHIFT+F7] or by selecting the move section option from the section menu. This option is disabled if there is only a single notebook open. After selecting this option, you will be prompted to select an open notebook to move the section to. The currently selected notebook will not change. The section will be removed from the current notebook, and moved to the new notebook and inserted at the top of the section list. The trash section is a special section for trashed entries and cannot be moved.
+
+Clean Trash
+Each notebook has a separate trash section. All entries in the trash section can be deleted at once by pressing [SHIFT+F8], or by selecting the clean trash option from the section menu. You will be prompted for confirmation to clean the trash. Cleaning the trash permanently deletes the entries in the notebook's trash section.
+
+Delete Section
+A section can be deleted by pressing the [CTRL+SHIFT+F8] key, or by selecting the delete section option from the section menu. You will be prompted for confirmation to delete the section and all of its entries. Upon confirmation, the section and all of the entries it contains will be permanently deleted.
+
+Search for Section
+You can search for a section by name by pressing the [CTRL+K], or by selecting the search for section option from the section menu. You will be prompted with a dialog to enter the search criteria. The sections of all open notebooks will be searched. Each time the search button is pressed within the dialog, the next section matching the criteria is selected. When there are no more matches, the search dialog box displays a message that the search is complete.
+
+Print Section
+A section can be printed by pressing [CTRL+SHIFT+P], or by selecting the print section option from the section menu. You will be prompted with the standard print dialog. All entries in the section will be printed in their current order.

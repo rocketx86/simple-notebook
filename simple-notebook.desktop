@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Simple Notebook
+Comment=Simple Notebook
+Exec=/usr/local/bin/simple-notebook/notebook
+Icon=/usr/local/share/pixmaps/simple-notebook/notebook.png
+Path=.~
+Terminal=false
+StartupNotify=false
+GenericName=Simple Notebook

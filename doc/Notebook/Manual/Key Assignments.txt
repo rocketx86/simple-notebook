@@ -1,0 +1,90 @@
+Key Assignments
+
+Notebook Menu
+[SHIFT+F1] = Create notebook
+[SHIFT+F2] = Rename notebook
+[SHIFT+F3] = Open notebook
+[SHIFT+F4] = Close notebook
+[CTRL+SHIFT+F4] = Delete notebook
+[CTRL+H] = View history
+[CTRL+G] = Clear history
+[CTRL+B] = View bookmarks
+[CTRL+N] = Clear bookmarks
+[CTRL+J] = Search notebook
+[CTRL+ALT+P] = Print notebook
+[CTRL+LEFT] = Select notebook left
+[CTRL+RIGHT] = Select notebook right
+[CTRL+SHIFT+LEFT] = Shift notebook left
+[CTRL+SHIFT+RIGHT] = Shift notebook right
+[CTRL+SHIFT+DRAG] = Shift notebook left or right
+[ESC] = Exit notebook
+
+Section Menu
+[SHIFT+F5] = Create section
+[SHIFT+F6] = Rename section
+[SHIFT+F7] = Copy section
+[CTRL+SHIFT+F7] = Move a section
+[SHIFT+F8] = Clean trash
+[CTRL+SHIFT+F8] = Delete section
+[CTRL+K] = Search section
+[CTRL+SHIFT+P] = Print section
+[LEFT] = Select section up
+[RIGHT] = Select section down
+[SHIFT+LEFT] = Shift section up
+[SHIFT+RIGHT] = Shift section down
+[SHIFT+DRAG] = Shift section up or down
+
+Entry Menu
+[SHIFT+INS] = Create entry
+[SHIFT+F9] = Create entry
+[SHIFT+F10]  = Rename entry
+[SHIFT+F11] = Copy entry
+[CTRL+DRAG] = Copy entry
+[CTRL+SHIFT+F11] = Move entry
+[CTRL+SHIFT+DRAG] = Move entry
+[SHIFT+DEL] = Trash entry
+[SHIFT+F12] = Trash entry
+[CTRL+SHIFT+DEL] = Delete entry
+[CTRL+SHIFT+F12] = Delete entry
+[BACKSPACE] = Back history
+[ALT+LEFT] = Back history
+[ALT+RIGHT] = Forward history
+[CTRL+W] = Bookmark entry
+[CTRL+(1-9)] = Select bookmark
+[CTRL+SHIFT+(1-9)] = Set bookmark
+[CTRL+ALT+(1-9)] = Clear bookmark
+[CTRL+L] = Search entry
+[CTRL+P] = Print entry
+[UP] = Select entry up
+[DOWN]  = Select entry down
+[SHIFT+UP] = Shift entry up
+[SHIFT+DOWN] = Shift entry down
+[SHIFT+DRAG] = Shift entry up or down
+
+Text Menu
+[TAB] = Enter edit mode
+[ENTER] = Enter edit mode
+[SHIFT+ENTER] = Exit edit mode
+[CTRL+S] = Save text
+[CTRL+R] = Replace text
+[CTRL+Z] = Undo change
+[CTRL+Y] = Redo change
+[CTRL+A] = Select all text
+[CTRL+X] = Cut text
+[CTRL+C] = Copy text
+[CTRL+V] = Paste text
+[DEL] = Delete text
+[INS] = Toggle Insert / Replace mode
+[CTRL+LEFT] = Move word left
+[CTRL+RIGHT] = Move word right
+[CTRL+HOME] = Move top
+[CTRL+END] = Move bottom
+
+Dialog Box Commands
+[ENTER] = OK
+[ESC] = Cancel
+[TAB] = Switch control focus
+[UP] = Select item up
+[DOWN] = Select item down
+[LEFT] = Select item left
+[RIGHT] = Select item right

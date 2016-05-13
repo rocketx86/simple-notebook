@@ -82,6 +82,7 @@ user:
 	@$(mkdir) $(HOME)/.simple-notebook
 	@$(cpd) $(DOCDIR)/* $(HOME)/.simple-notebook
 	@$(cp) ./simple-notebook.desktop $(HOME)/Desktop
+	@echo "User initialized!"
 
 .PHONEY: install
 install:

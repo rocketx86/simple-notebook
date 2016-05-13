@@ -8,14 +8,14 @@ Simple Notebook is designed to take notes quickly and has full keyboard command 
 
 Here are the key features:
 
-    * Clean and simple user interface
-    * Full keyboard command control
-    * Efficient section and entry organization
-    * Unlimited number of notebooks, sections or entries
-    * Quick history and bookmark navigation
-    * Search for sections and entries
-    * Find and replace text in entries
-    * Print notebook, sections and entries
+* Clean and simple user interface
+* Full keyboard command control
+* Efficient section and entry organization
+* Unlimited number of notebooks, sections or entries
+* Quick history and bookmark navigation
+* Search for sections and entries
+* Find and replace text in entries
+* Print notebook, sections and entries
 
 Simple Notebook allows you to organize your notes into multiple notebooks, where each notebook can be used to organize multiple sections, and each section can be used to organize multiple entries. The open notebooks are displayed in the tab bar along the top of the work area. The active notebook's sections are displayed in the list on the upper left and the entries within the selected section are displayed in the list on the lower left. The text of the selected entry is displayed in the text pane on the right. Sections and entries can be copied and moved across open notebooks and sections.
 
@@ -24,27 +24,40 @@ Simple Notebook data files are portable because they are plain text files. Your 
 ## Installation
 
 *Source*  
+```
 	$ git clone https://github.com/rocketx86/simple-notebook
-
+```
 *Build*  
+```
 	$ cd simple-notebook  
 	$ make clean  
 	$ make all  
+```
 
 *Test*  
+```
 	$ bin/notebook -d ./test -r ./res
+```
 
 *Install*  
+```
 	$ sudo make install
+```
 
 *Init User*  
+```
 	$ make user
+```
 
 *Run*  
+```
 	$ /usr/local/bin/simple-notebook/notebook
+```
 
 *Uninstall*  
+```
 	$ sudo make uninstall
+```
 
 ## License
 

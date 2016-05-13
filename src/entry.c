@@ -1134,6 +1134,125 @@ gboolean move_entry()
 } // Move entry
 
 /*
+ * Trash entry
+ */
+gboolean trash_entry()
+{
+	FILE *fp = NULL;
+	GtkWidget *msg_dialog = NULL;
+	gchar curr_entry_display_name[MAX_NAME_LEN];
+	gchar trash_entry_display_name[MAX_NAME_LEN];
+	gchar curr_entry_path[MAX_PATH_LEN];
+	gchar trash_entry_path[MAX_PATH_LEN];
+	GList *entry_item = NULL;
+	book_data *book = NULL;
+	section_data *section = NULL;
+	section_data *trash_section = NULL;
+	entry_data *entry = NULL;
+	gint result;
+
+	// Assert master exists
+	g_assert_nonnull(master);
+
+	// Get currently selected
+	book = get_current_book_or_return_with_warning();
+	section = get_current_section_or_return_with_warning();
+	entry = get_current_entry_or_return_with_warning();
+	
+	// Get trash section
+	trash_section = book->trash_section;
+	
+	// Curr entry file path
+	g_snprintf(curr_entry_path, sizeof(curr_entry_path),
+		"%s%s%s%s%s%s%s.txt",
+		note_dir, G_DIR_SEPARATOR_S,
+		book->name, G_DIR_SEPARATOR_S,
+		section->name, G_DIR_SEPARATOR_S,
+		entry->name);
+
+	// Move entry file path
+	g_snprintf(trash_entry_path, sizeof(trash_entry_path),
+		"%s%s%s%s%s%s%s.txt",
+		note_dir, G_DIR_SEPARATOR_S,
+		book->name, G_DIR_SEPARATOR_S,
+		trash_section_name, G_DIR_SEPARATOR_S,
+		entry->name);
+
+	// Set display name
+	strncpy(curr_entry_display_name, entry->name, MAX_NAME_LEN-5);
+	if(strlen(curr_entry_display_name) > 25)
+		strcpy(curr_entry_display_name+25, "...\0");
+
+	strncpy(trash_entry_display_name, entry->name, MAX_NAME_LEN-5);
+	if(strlen(trash_entry_display_name) > 25)
+		strcpy(trash_entry_display_name+25, "...\0");
+
+	// Check that new entry path is valid
+	fp = fopen(trash_entry_path, "wx");
+
+	if (fp == NULL) {
+		sn_warning("Unable to trash entry [%s].", trash_entry_path);
+
+		msg_dialog = gtk_message_dialog_new(GTK_WINDOW(main_window), GTK_DIALOG_MODAL,
+			GTK_MESSAGE_WARNING, GTK_BUTTONS_OK,
+			"Unable to trash entry \"%s\".", trash_entry_display_name);
+		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
+			"Please ensure the entry name doesn't aleady exist.");
+		gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+		result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
+
+		gtk_widget_destroy(msg_dialog);
+		return FALSE;
+	}
+	fclose(fp);
+
+	// Remove file created by previous open
+	result = remove(trash_entry_path);
+
+	sn_trace("Trashing entry [%s] to [%s].", curr_entry_path, trash_entry_path);
+
+	// Copy the entry file to the new path
+	result = rename(curr_entry_path, trash_entry_path);
+
+	if(result == 0) {
+
+		// Remove history
+		remove_history();
+
+		// Select next entry
+		entry_item = g_list_find(section->entry_list, entry);
+		entry_item = entry_item->next;
+		if(entry_item != NULL)
+			section->curr_entry = entry_item->data;
+		else
+			section->curr_entry = NULL;
+
+		// Remove entry
+		section->entry_list = g_list_remove(section->entry_list, entry);
+
+		// Append entry
+		trash_section->entry_list = g_list_append(trash_section->entry_list, entry);
+
+		// Update entry
+		entry->parent_section = trash_section;
+
+		// Write book
+		write_book(book, note_dir);
+
+		// Update view
+		populate_entries(book, section);
+
+		return TRUE;
+
+	} else {
+		sn_warning("Unable to trash entry [%s].", curr_entry_path);
+		return FALSE;
+	}
+
+	return FALSE;
+} // Trash entry
+
+/*
  * Delete entry
  */
 gboolean delete_entry()

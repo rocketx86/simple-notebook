@@ -212,7 +212,7 @@ GtkWidget* create_main_toolbar()
 	gtk_toolbar_insert(GTK_TOOLBAR(main_toolbar), button, te);
 	gtk_tool_item_set_proxy_menu_item (button, "trash-entry", trashEntryMi);
 	gtk_tool_item_set_tooltip_markup(button, "Trash Entry");
-	//g_signal_connect(button, "clicked", NULL, NULL);
+	g_signal_connect(button, "clicked", G_CALLBACK(trash_entry), NULL);
 
 	// Delete entry button
 	iconw = create_icon_widget("delete-entry.xpm");

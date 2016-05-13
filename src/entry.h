@@ -44,6 +44,7 @@ extern gboolean create_entry();
 extern gboolean rename_entry();
 extern gboolean copy_entry();
 extern gboolean move_entry();
+extern gboolean trash_entry();
 extern gboolean delete_entry();
 extern gboolean shift_entry_up();
 extern gboolean shift_entry_down();

@@ -374,6 +374,8 @@ GtkWidget* create_main_menu (void)
 		G_CALLBACK(copy_entry), NULL);
 	g_signal_connect(G_OBJECT(moveEntryMi), "activate",
 		G_CALLBACK(move_entry), NULL);
+	g_signal_connect(G_OBJECT(trashEntryMi), "activate",
+		G_CALLBACK(trash_entry), NULL);
 	g_signal_connect(G_OBJECT(deleteEntryMi), "activate",
 		G_CALLBACK(delete_entry), NULL);
 	g_signal_connect(G_OBJECT(forwardHistoryMi), "activate",
@@ -432,6 +434,8 @@ GtkWidget* create_main_menu (void)
 						GDK_F11, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(moveEntryMi, "activate", accel_group,
 						GDK_F11, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
+	gtk_widget_add_accelerator(trashEntryMi, "activate", accel_group,
+						GDK_F12, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(deleteEntryMi, "activate", accel_group,
 						GDK_F12, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(forwardHistoryMi, "activate", accel_group,

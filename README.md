@@ -23,41 +23,54 @@ Simple Notebook data files are portable because they are plain text files. Your 
 
 ## Installation
 
-*Source*  
+**Source**
+Download the source code for project and create the sub-directory simple-notebook.
 ```
 	$ git clone https://github.com/rocketx86/simple-notebook
 ```
-*Build*  
+
+**Build**
+Change to sub-directory, clean test data, and compile and link the application. 
 ```
 	$ cd simple-notebook  
 	$ make clean  
 	$ make all  
 ```
 
-*Test*  
+**Test**
+Run the application with local test notebook and resources.
 ```
 	$ bin/notebook -d ./test -r ./res
 ```
 
-*Install*  
+**Install**
+Install the application into /usr/local/bin and resources into /usr/local/share.
 ```
 	$ sudo make install
 ```
 
-*Init User*  
+**Init User**
+Create default user notebook in $(HOME)/.simple-notebook and desktop launcher.
 ```
 	$ make user
 ```
 
-*Run*  
+**Run**
+Run from the installation directory opening default user notebook.
 ```
 	$ /usr/local/bin/simple-notebook/notebook
 ```
+Run from the installation directory opening custom notebook.
+```
+	$ /usr/local/bin/simple-notebook/notebook -d /path/to/notebook
+```
 
-*Uninstall*  
+**Uninstall**
+Uninstall the application from /usr/local/bin and /usr/local/share.
 ```
 	$ sudo make uninstall
 ```
+_Does not remove user notebook or desktop launcher._
 
 ## License
 

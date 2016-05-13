@@ -70,10 +70,8 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPENDS)
 clean:
 	@$(rmd) $(OBJDIR)
 	@$(mkdir) $(OBJDIR)
-	@echo "Object files removed!"
 	@$(rmd) $(BINDIR)
 	@$(mkdir) $(BINDIR)
-	@echo "Executable removed!"
 	@$(rmd) $(TESTDIR)
 	@$(mkdir) $(TESTDIR)
 	@$(cpd) $(DOCDIR)/* $(TESTDIR)

@@ -60,6 +60,7 @@ gboolean view_history()
 	GtkCellRenderer *cell_rend = NULL;
 	GtkTreeViewColumn *view_col = NULL;
 	GtkTreeIter history_iter;
+	GtkWidget *hbox = NULL;
 	GtkWidget *vbox = NULL;
 	GtkWidget *label = NULL;
 	GList *history_item = NULL;
@@ -84,9 +85,12 @@ gboolean view_history()
 	gtk_dialog_set_default_response(GTK_DIALOG(history_dialog),
 		GTK_RESPONSE_ACCEPT);
 
-	vbox = gtk_dialog_get_content_area(GTK_DIALOG(history_dialog));
+	// Set label
 	label = gtk_label_new("Select entry to view from history...");
-	gtk_box_pack_start(GTK_BOX(vbox), label, TRUE, TRUE, 5);
+	hbox = gtk_hbox_new(FALSE, 0);
+	vbox = gtk_dialog_get_content_area(GTK_DIALOG(history_dialog));
+	gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 5);
 
 	// Create scroll view
 	history_scroll = gtk_scrolled_window_new(NULL, NULL);
@@ -95,7 +99,9 @@ gboolean view_history()
 		(GTK_SCROLLED_WINDOW(history_scroll), GTK_SHADOW_IN);
 	gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(history_scroll),
 		GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-	gtk_box_pack_start(GTK_BOX(vbox), history_scroll, TRUE, TRUE, 5);
+	hbox = gtk_hbox_new(FALSE, 0);
+	gtk_box_pack_start(GTK_BOX(hbox), history_scroll, TRUE, TRUE, 5);
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 5);
 
 	// Create tree view
 	history_view = gtk_tree_view_new();

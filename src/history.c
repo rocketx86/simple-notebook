@@ -81,6 +81,8 @@ gboolean view_history()
 			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
 			GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
+	gtk_window_set_type_hint(GTK_WINDOW(history_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+	gtk_window_set_resizable(GTK_WINDOW(history_dialog), FALSE);
 
 	gtk_dialog_set_default_response(GTK_DIALOG(history_dialog),
 		GTK_RESPONSE_ACCEPT);

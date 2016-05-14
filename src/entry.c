@@ -481,6 +481,8 @@ static GtkWidget* create_book_section_dialog(GtkWidget *section_view,
 			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
 			GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
+	gtk_window_set_type_hint(GTK_WINDOW(section_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+	gtk_window_set_resizable(GTK_WINDOW(section_dialog), FALSE);
 
 	gtk_dialog_set_default_response(GTK_DIALOG(section_dialog),
 		GTK_RESPONSE_ACCEPT);
@@ -649,6 +651,8 @@ gboolean rename_entry()
 			GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
 	gtk_widget_set_size_request(name_dialog, SM_DLG_WIDTH, SM_DLG_HEIGHT);
+	gtk_window_set_type_hint(GTK_WINDOW(name_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+	gtk_window_set_resizable(GTK_WINDOW(name_dialog), FALSE);
 
 	label = gtk_label_new("Enter new entry name...");
 	name_entry = gtk_entry_new();
@@ -743,6 +747,8 @@ gboolean rename_entry()
 			gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 				"Please ensure the entry name contains a valid character.");
 			gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+			gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+			gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 			result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 			gtk_widget_destroy(name_dialog);
@@ -763,6 +769,8 @@ gboolean rename_entry()
 			gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 				"Please ensure the entry name doesn't aleady exist.");
 			gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+			gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+			gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 			result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 			gtk_widget_destroy(name_dialog);
@@ -821,8 +829,7 @@ gboolean copy_entry()
 	GtkTreeModel *section_model = NULL;
 	GtkTreeSelection *section_selection = NULL;
 	GtkTreeIter section_iter;
-	gchar curr_entry_display_name[MAX_NAME_LEN];
-	gchar copy_entry_display_name[MAX_NAME_LEN];
+	gchar entry_display_name[MAX_NAME_LEN];
 	gchar curr_entry_path[MAX_PATH_LEN];
 	gchar copy_entry_path[MAX_PATH_LEN];
 	book_data *book = NULL;
@@ -902,13 +909,9 @@ gboolean copy_entry()
 			entry->name);
 
 		// Set display name
-		strncpy(curr_entry_display_name, entry->name, MAX_NAME_LEN-5);
-		if(strlen(curr_entry_display_name) > 25)
-			strcpy(curr_entry_display_name+25, "...\0");
-
-		strncpy(copy_entry_display_name, entry->name, MAX_NAME_LEN-5);
-		if(strlen(copy_entry_display_name) > 25)
-			strcpy(copy_entry_display_name+25, "...\0");
+		strncpy(entry_display_name, entry->name, MAX_NAME_LEN-5);
+		if(strlen(entry_display_name) > 25)
+			strcpy(entry_display_name+25, "...\0");
 
 		// Check that new entry path is valid
 		fp = fopen(copy_entry_path, "wx");
@@ -918,10 +921,12 @@ gboolean copy_entry()
 
 			msg_dialog = gtk_message_dialog_new(GTK_WINDOW(main_window), GTK_DIALOG_MODAL,
 				GTK_MESSAGE_WARNING, GTK_BUTTONS_OK,
-				"Unable to copy entry \"%s\".", copy_entry_display_name);
+				"Unable to copy entry \"%s\".", entry_display_name);
 			gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 				"Please ensure the entry name doesn't aleady exist.");
 			gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+			gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+			gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 			result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 			gtk_widget_destroy(msg_dialog);
@@ -983,16 +988,15 @@ gboolean move_entry()
 	GtkTreeModel *section_model = NULL;
 	GtkTreeSelection *section_selection = NULL;
 	GtkTreeIter section_iter;
-	gchar curr_entry_display_name[MAX_NAME_LEN];
-	gchar copy_entry_display_name[MAX_NAME_LEN];
+	gchar entry_display_name[MAX_NAME_LEN];
 	gchar curr_entry_path[MAX_PATH_LEN];
 	gchar copy_entry_path[MAX_PATH_LEN];
+	GList *entry_item = NULL;
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
 	book_data *book_copy = NULL;
 	section_data *section_copy = NULL;
-	entry_data *entry_copy = NULL;
 	gint result;
 
 	// Assert master exists
@@ -1064,13 +1068,9 @@ gboolean move_entry()
 			entry->name);
 
 		// Set display name
-		strncpy(curr_entry_display_name, entry->name, MAX_NAME_LEN-5);
-		if(strlen(curr_entry_display_name) > 25)
-			strcpy(curr_entry_display_name+25, "...\0");
-
-		strncpy(copy_entry_display_name, entry->name, MAX_NAME_LEN-5);
-		if(strlen(copy_entry_display_name) > 25)
-			strcpy(copy_entry_display_name+25, "...\0");
+		strncpy(entry_display_name, entry->name, MAX_NAME_LEN-5);
+		if(strlen(entry_display_name) > 25)
+			strcpy(entry_display_name+25, "...\0");
 
 		// Check that new entry path is valid
 		fp = fopen(copy_entry_path, "wx");
@@ -1080,10 +1080,12 @@ gboolean move_entry()
 
 			msg_dialog = gtk_message_dialog_new(GTK_WINDOW(main_window), GTK_DIALOG_MODAL,
 				GTK_MESSAGE_WARNING, GTK_BUTTONS_OK,
-				"Unable to move entry \"%s\".", copy_entry_display_name);
+				"Unable to move entry \"%s\".", entry_display_name);
 			gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 				"Please ensure the entry name doesn't aleady exist.");
 			gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+			gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+			gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 			result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 			gtk_widget_destroy(msg_dialog);
@@ -1097,22 +1099,37 @@ gboolean move_entry()
 
 		sn_trace("Moving entry [%s] to [%s].", curr_entry_path, copy_entry_path);
 
-		// Copy the entry file to the new path
-		result = copy_file(copy_entry_path, curr_entry_path);
+		// Move the entry file to the new path
+		result = rename(curr_entry_path, copy_entry_path);
 
 		if(result == 0) {
 
-			// Create entry
-			entry_copy = g_new0(entry_data, NEW_INSTANCE);
-			strcpy(entry_copy->name, entry->name);
-			entry_copy->parent_section = section_copy;
+			// Remove history
+			remove_history();
 
-			// Update model
-			section_copy->entry_list = g_list_append(section_copy->entry_list, entry_copy);
+			// Select next entry
+			entry_item = g_list_find(section->entry_list, entry);
+			entry_item = entry_item->next;
+			if(entry_item != NULL)
+				section->curr_entry = entry_item->data;
+			else
+				section->curr_entry = NULL;
 
-			// Update book
+			// Remove entry
+			section->entry_list = g_list_remove(section->entry_list, entry);
+
+			// Append entry
+			section_copy->entry_list = g_list_append(section_copy->entry_list, entry);
+
+			// Update entry
+			entry->parent_section = section_copy;
+
+			// Write book
 			write_book(book, note_dir);
 
+			// Update view
+			populate_entries(book, section);
+			
 			gtk_widget_destroy(section_dialog);
 			return TRUE;
 
@@ -1208,7 +1225,7 @@ gboolean trash_entry()
 
 	sn_trace("Trashing entry [%s] to [%s].", curr_entry_path, trash_entry_path);
 
-	// Copy the entry file to the new path
+	// Move the entry file to the new path
 	result = rename(curr_entry_path, trash_entry_path);
 
 	if(result == 0) {

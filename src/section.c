@@ -507,6 +507,8 @@ gboolean rename_section()
 			GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
 			GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT, NULL);
 	gtk_widget_set_size_request(name_dialog, SM_DLG_WIDTH, SM_DLG_HEIGHT);
+	gtk_window_set_type_hint(GTK_WINDOW(name_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+	gtk_window_set_resizable(GTK_WINDOW(name_dialog), FALSE);
 
 	label = gtk_label_new("Enter new section name...");
 	name_entry = gtk_entry_new();

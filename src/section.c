@@ -60,6 +60,7 @@ static gboolean on_section_selection(GtkTreeSelection *selection, GtkTreeModel *
 
 /*
  * On section key press
+ * Signal handler for "key-press-event"
  */
 gboolean on_section_key_press(GtkTreeView *section_view,
 					GdkEventKey *event, gpointer data)
@@ -181,6 +182,7 @@ gboolean on_section_key_press(GtkTreeView *section_view,
  * On section change
  * Signal handler for view "cursor-changed" event
  * Called from create_section in section.c
+ * Called from rename_section in section.c
  */
 void on_section_change(GtkTreeView *section_view, gpointer data)
 {
@@ -298,7 +300,7 @@ gboolean populate_sections(book_data *book)
 
 /*
  * Get section name
- * Sets the text of cell_rend to section name
+ * Sets the text of cell to section name
  */
 static void get_section_name (GtkTreeViewColumn *tree_column,
 					GtkCellRenderer *cell_rend, GtkTreeModel *model,
@@ -313,7 +315,7 @@ static void get_section_name (GtkTreeViewColumn *tree_column,
 
 /*
  * Create section model
- * Called by populate_sections(book)
+ * Called by populate_sections in section.c
  */
 static GtkTreeModel* create_section_model(book_data *book)
 {
@@ -337,7 +339,7 @@ static GtkTreeModel* create_section_model(book_data *book)
 
 /*
  * Init section view
- * Called from create_book_page() in page.c
+ * Called from create_book_page in page.c
  */
 gboolean init_section_view(GtkTreeView *section_view, book_data *book)
 {
@@ -374,6 +376,7 @@ gboolean init_section_view(GtkTreeView *section_view, book_data *book)
 
 /*
  * Create section
+ * Signal handler for "activate" create section
  */
 gboolean create_section()
 {
@@ -456,6 +459,8 @@ gboolean create_section()
 
 /*
  * Rename section
+ * Signal handler for "activate" rename section
+ * Called from create_section in section.c
  */
 gboolean rename_section()
 {
@@ -657,6 +662,7 @@ gboolean rename_section()
 
 /*
  * Clean trash
+ * Signal handler for "activate" clean trash
  */
 gboolean clean_trash()
 {
@@ -745,6 +751,7 @@ gboolean clean_trash()
 
 /*
  * Delete section
+ * Signal handler for "activate" delete section
  */
 gboolean delete_section()
 {

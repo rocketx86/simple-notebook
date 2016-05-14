@@ -68,6 +68,7 @@ static gboolean on_entry_selection(GtkTreeSelection *selection, GtkTreeModel *en
 
 /*
  * On entry key press
+ * Signal handler for "key-press-event"
  */
 gboolean on_entry_key_press(GtkTreeView *entry_view,
 					GdkEventKey *event, gpointer data)
@@ -188,6 +189,7 @@ gboolean on_entry_key_press(GtkTreeView *entry_view,
  * On entry change
  * Signal handler for view "cursor-changed" event
  * Called from create_entry in entry.c
+ * Called from rename_entry in entry.c
  */
 void on_entry_change(GtkTreeView *entry_view, gpointer data)
 {
@@ -241,8 +243,8 @@ void on_entry_change(GtkTreeView *entry_view, gpointer data)
 
 /*
  * Populate entries
- * Called from populate_sections() in section.c
- * Called from on_section_change() in section.c
+ * Called from populate_sections in section.c
+ * Called from on_section_change in section.c
  * Called from create_entry in entry.c
  */
 gboolean populate_entries(book_data *book, section_data *section)
@@ -347,7 +349,7 @@ static void get_book_section_name(GtkTreeViewColumn *tree_column,
 
 /*
  * Create entry model
- * Called from populate_entries()
+ * Called from populate_entries in entry.c
  */
 static GtkTreeModel* create_entry_model(section_data *section)
 {
@@ -375,7 +377,8 @@ static GtkTreeModel* create_entry_model(section_data *section)
 
 /*
  * Create book section model
- * Called by copy_entry
+ * Called from copy_entry in entry.c
+ * Called from move_entry in entry.c
  */
 static GtkTreeModel* create_book_section_model(master_data *master)
 {
@@ -406,7 +409,7 @@ static GtkTreeModel* create_book_section_model(master_data *master)
 
 /*
  * Init entry view
- * Called from create_book_page() in page.c
+ * Called from create_book_page in page.c
  */
 gboolean init_entry_view(GtkTreeView *entry_view, book_data *book)
 {
@@ -443,7 +446,8 @@ gboolean init_entry_view(GtkTreeView *entry_view, book_data *book)
 
 /*
  * Init book section view
- * Called from copy_entry
+ * Called from copy_entry in entry.c
+ * Called from move_entry in entry.c
  */
 static gboolean init_book_section_view(GtkTreeView *section_view)
 {
@@ -467,6 +471,8 @@ static gboolean init_book_section_view(GtkTreeView *section_view)
 
 /*
  * Create book section dialog
+ * Called from copy_entry in entry.c
+ * Called from move_entry in entry.c
  */
 static GtkWidget* create_book_section_dialog(GtkWidget *section_view,
 					const gchar *dialog_label)
@@ -515,6 +521,7 @@ static GtkWidget* create_book_section_dialog(GtkWidget *section_view,
 
 /*
  * Create entry
+ * Signal handler for "activate" create entry
  */
 gboolean create_entry()
 {
@@ -609,6 +616,7 @@ gboolean create_entry()
 
 /*
  * Rename entry
+ * Signal handler for "activate" rename entry
  */
 gboolean rename_entry()
 {
@@ -819,6 +827,7 @@ gboolean rename_entry()
 
 /*
  * Copy entry
+ * Signal handler for "activate" copy entry
  */
 gboolean copy_entry()
 {
@@ -978,6 +987,7 @@ gboolean copy_entry()
 
 /*
  * Move entry
+ * Signal handler for "activate" move entry
  */
 gboolean move_entry()
 {
@@ -1152,6 +1162,7 @@ gboolean move_entry()
 
 /*
  * Trash entry
+ * Signal handler for "activate" trash entry
  */
 gboolean trash_entry()
 {
@@ -1268,6 +1279,7 @@ gboolean trash_entry()
 
 /*
  * Delete entry
+ * Signal handler for "activate" delete entry
  */
 gboolean delete_entry()
 {
@@ -1535,7 +1547,7 @@ void write_current_entry()
 
 /*
  * On section mouse button press
- * Signal handler for mouse clicks on book section dialog
+ * Signal handler for "button-press-event" in book section view
  */
 gboolean on_section_mouse_button_press(GtkWidget *view,
 					GdkEvent *event, gpointer data)

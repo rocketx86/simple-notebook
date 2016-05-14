@@ -646,8 +646,8 @@ void set_text_view_focus(GtkTextView *text_view)
 
 /*
  * Read text
- * Called from populate_entries
- * Called from on_entry_change
+ * Called from populate_entries in entry.c
+ * Called from on_entry_change in entry.c
  */
 gboolean read_text(book_data *book, entry_data *entry)
 {

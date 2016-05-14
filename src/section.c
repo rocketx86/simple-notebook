@@ -495,6 +495,8 @@ gboolean rename_section()
 		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 			"Trash is a special section used to soft delete entries.");
 		gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+		gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+		gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 		result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 		gtk_widget_destroy(msg_dialog);
@@ -585,6 +587,8 @@ gboolean rename_section()
 			gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 				"Please ensure the section name contains a valid character.");
 			gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+			gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+			gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 			result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 			gtk_widget_destroy(name_dialog);
@@ -605,6 +609,8 @@ gboolean rename_section()
 			gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 				"Please ensure the section name doesn't aleady exist.");
 			gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+			gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+			gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 			result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 			gtk_widget_destroy(name_dialog);
@@ -683,6 +689,8 @@ gboolean delete_section()
 		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 			"Trash is a special section used to soft delete entries.");
 		gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+		gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+		gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 		result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 
 		gtk_widget_destroy(msg_dialog);
@@ -702,6 +710,8 @@ gboolean delete_section()
 	gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 		"If you delete a section, it is permanently lost.");
 	gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+	gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+	gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 
 	result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 	switch (result) {

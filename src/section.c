@@ -656,6 +656,92 @@ gboolean rename_section()
 } // Rename section
 
 /*
+ * Clean trash
+ */
+gboolean clean_trash()
+{
+	GtkWidget *msg_dialog = NULL;
+	GList *section_item = NULL;
+	gchar filename[MAX_PATH_LEN];
+	book_data *book = NULL;
+	section_data *section = NULL;
+	entry_data *entry = NULL;
+	view_data *view = NULL;
+	gint result;
+
+	// Assert master exists
+	g_assert_nonnull(master);
+
+	// Get currently selected
+	book = get_current_book_or_return_with_warning();
+	section = get_current_section_or_return_with_warning();
+
+	// Get view data
+	view = book->view;
+
+	// Confirm clean trash action
+	msg_dialog = gtk_message_dialog_new(GTK_WINDOW(main_window), GTK_DIALOG_MODAL,
+		GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+		"Are you sure you want to clean trash and delete and all of its entries?");
+	gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
+		"If you clean the trash, its entries are permanently lost.");
+	gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+	gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+	gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
+
+	result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
+	switch (result) {
+	case GTK_RESPONSE_YES:
+
+		// Delete entries
+		for(section_item = section->entry_list;
+		section_item != NULL; section_item = section_item->next) {
+
+			entry = section_item->data;
+
+			// Delete entry text file
+			g_snprintf(filename, sizeof(filename),
+				"%s%s%s%s%s%s%s.txt",
+				note_dir, G_DIR_SEPARATOR_S,
+				book->name, G_DIR_SEPARATOR_S,
+				section->name, G_DIR_SEPARATOR_S,
+				entry->name);
+
+			sn_trace("Deleting entry [%s] in %s.",
+				filename, __func__);
+
+			result = remove(filename);
+
+			if(result != 0) {
+				sn_warning("Unable to delete entry [%s].", entry->name);
+				sn_warning("Unable to delete section [%s].", section->name);
+				gtk_widget_destroy(msg_dialog);
+				return FALSE;
+			}
+		}
+
+		// Free entries
+		g_list_free_full(section->entry_list, free_entry);
+		section->entry_list = NULL;
+
+		// Write book
+		write_book(book, note_dir);
+
+		// Update view
+		populate_sections(book);
+		
+		gtk_widget_grab_focus(GTK_WIDGET(view->section_view));
+		gtk_widget_destroy(msg_dialog);
+		return TRUE;
+
+	default:
+		gtk_widget_destroy(msg_dialog);
+		return FALSE;
+	}
+	return FALSE;
+} // Clean trash
+
+/*
  * Delete section
  */
 gboolean delete_section()

@@ -990,7 +990,7 @@ gboolean move_entry()
 	GtkTreeIter section_iter;
 	gchar entry_display_name[MAX_NAME_LEN];
 	gchar curr_entry_path[MAX_PATH_LEN];
-	gchar copy_entry_path[MAX_PATH_LEN];
+	gchar move_entry_path[MAX_PATH_LEN];
 	GList *entry_item = NULL;
 	book_data *book = NULL;
 	section_data *section = NULL;
@@ -1059,8 +1059,8 @@ gboolean move_entry()
 			section->name, G_DIR_SEPARATOR_S,
 			entry->name);
 
-		// Copy entry file path
-		g_snprintf(copy_entry_path, sizeof(copy_entry_path),
+		// Move entry file path
+		g_snprintf(move_entry_path, sizeof(move_entry_path),
 			"%s%s%s%s%s%s%s.txt",
 			note_dir, G_DIR_SEPARATOR_S,
 			book_copy->name, G_DIR_SEPARATOR_S,
@@ -1073,10 +1073,10 @@ gboolean move_entry()
 			strcpy(entry_display_name+25, "...\0");
 
 		// Check that new entry path is valid
-		fp = fopen(copy_entry_path, "wx");
+		fp = fopen(move_entry_path, "wx");
 
 		if (fp == NULL) {
-			sn_warning("Unable to move entry [%s].", copy_entry_path);
+			sn_warning("Unable to move entry [%s].", move_entry_path);
 
 			msg_dialog = gtk_message_dialog_new(GTK_WINDOW(main_window), GTK_DIALOG_MODAL,
 				GTK_MESSAGE_WARNING, GTK_BUTTONS_OK,
@@ -1095,12 +1095,12 @@ gboolean move_entry()
 		fclose(fp);
 
 		// Remove file created by previous open
-		result = remove(copy_entry_path);
+		result = remove(move_entry_path);
 
-		sn_trace("Moving entry [%s] to [%s].", curr_entry_path, copy_entry_path);
+		sn_trace("Moving entry [%s] to [%s].", curr_entry_path, move_entry_path);
 
 		// Move the entry file to the new path
-		result = rename(curr_entry_path, copy_entry_path);
+		result = rename(curr_entry_path, move_entry_path);
 
 		if(result == 0) {
 

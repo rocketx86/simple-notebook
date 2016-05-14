@@ -160,7 +160,7 @@ GtkWidget* create_main_toolbar()
 	gtk_toolbar_insert(GTK_TOOLBAR(main_toolbar), button, nt);
 	gtk_tool_item_set_proxy_menu_item (button, "clean-trash", cleanTrashMi);
 	gtk_tool_item_set_tooltip_markup(button, "Clean Trash");
-	//g_signal_connect(button, "clicked", NULL, NULL);
+	g_signal_connect(button, "clicked", G_CALLBACK(clean_trash), NULL);
 
 	// Delete section button
 	iconw = create_icon_widget("delete-section.xpm");

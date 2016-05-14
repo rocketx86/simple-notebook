@@ -361,6 +361,8 @@ GtkWidget* create_main_menu (void)
 		G_CALLBACK(create_section), NULL);
 	g_signal_connect(G_OBJECT(renameSectionMi), "activate",
 		G_CALLBACK(rename_section), NULL);
+	g_signal_connect(G_OBJECT(cleanTrashMi), "activate",
+		G_CALLBACK(clean_trash), NULL);
 	g_signal_connect(G_OBJECT(deleteSectionMi), "activate",
 		G_CALLBACK(delete_section), NULL);
 
@@ -421,6 +423,8 @@ GtkWidget* create_main_menu (void)
 						GDK_F5, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(renameSectionMi, "activate", accel_group,
 						GDK_F6, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
+	gtk_widget_add_accelerator(cleanTrashMi, "activate", accel_group,
+						GDK_F8, GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(deleteSectionMi, "activate", accel_group,
 						GDK_F8, GDK_CONTROL_MASK | GDK_SHIFT_MASK, GTK_ACCEL_VISIBLE);
 
@@ -446,7 +450,7 @@ GtkWidget* create_main_menu (void)
 
 	// Text menu accelerators
 	gtk_widget_add_accelerator(replaceTextMi, "activate", accel_group,
-						GDK_f, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+						GDK_r, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(selectTextMi, "activate", accel_group,
 						GDK_a, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(undoTextMi, "activate", accel_group,

@@ -195,6 +195,8 @@ gboolean clear_history()
 	gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 		"If you clear history, it is permanently lost.");
 	gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
+	gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+	gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 
 	result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 

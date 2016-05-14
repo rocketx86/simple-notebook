@@ -44,6 +44,7 @@ extern gboolean populate_sections(book_data *book);
 extern gboolean init_section_view(GtkTreeView *section_view, book_data *book);
 extern gboolean create_section();
 extern gboolean rename_section();
+extern gboolean clean_trash();
 extern gboolean delete_section();
 extern gboolean shift_section_up();
 extern gboolean shift_section_down();

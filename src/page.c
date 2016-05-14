@@ -24,6 +24,8 @@
 
 /*
  * Create book page
+ * Called from create_book in book.c
+ * Called from populate_books in book.c
  */
 view_data* create_book_page(gpointer main_view, gpointer data)
 {

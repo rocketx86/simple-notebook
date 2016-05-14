@@ -26,6 +26,7 @@ static const gchar *default_book_name = "Notebook";
 
 /*
  * On book key press
+ * Signal handler for "key-press-event"
  */
 gboolean on_book_key_press(GtkNotebook *notebook,
 					GdkEventKey *event, gpointer data)
@@ -118,7 +119,9 @@ gboolean on_book_key_press(GtkNotebook *notebook,
 
 /*
  * On book change
- * Triggered by delete_book
+ * Signal handler for "switch-page" event
+ * Triggered by delete_book in book.c
+ * Triggered by create_book_page in page.c
  */
 void on_book_change(GtkNotebook *notebook, gpointer page,
 					guint page_num, gpointer user_data)
@@ -196,6 +199,7 @@ gboolean populate_books(gchar *note_dir)
 
 /*
  * Create book
+ * Signal handler for "activate" create notebook
  */
 gboolean create_book()
 {
@@ -228,7 +232,9 @@ gboolean create_book()
 } // Create book
 
 /*
- * Rename book
+ * Rename book 
+ * Signal handler for "activate" rename notebook
+ * Called from rename_book in book.c
  */
 gboolean rename_book()
 {
@@ -414,6 +420,7 @@ gboolean rename_book()
 
 /*
  * Delete book
+ * Signal handler for "activate" delete notebook
  */
 gboolean delete_book()
 {
@@ -579,6 +586,8 @@ gboolean delete_book()
 
 /*
  * New book index
+ * Called from main in main.c
+ * Called from create_book in book.c
  */
 book_data* new_book(master_data* master, gchar* note_dir)
 {
@@ -667,7 +676,8 @@ book_data* new_book(master_data* master, gchar* note_dir)
 
 /*
  * Read book index
- * Called from populate_books
+ * Called from create_book in book.c
+ * Called from populate_books in book.c
  * Reads book index from file and creates
  * section and entry data structures
  */
@@ -778,6 +788,7 @@ gboolean read_book(book_data *book, gchar *note_dir)
 
 /*
  * Write book index
+ * Called from most signal handlers
  */
 gboolean write_book(book_data *book, gchar *note_dir)
 {

@@ -2,7 +2,7 @@ Introduction
 
 Simple Notebook is a note taking application that makes it easy for you to organize and reference your personal information. Simple Notebook is designed to be as easy to use as your old paper notebook. It's simple software for managing all kinds of notes, lists, research, contacts, and more.
 
-Simple Notebook is designed to take notes quickly and has full keyboard command support. Simple Notebook enables you to name entries quickly and then jump back to the previous note exactly where you left off. It's ideal for the creative authoring process.
+Simple Notebook is designed to take notes quickly and has full keyboard command support. Simple Notebook enables you to create entries quickly and then jump back to the previous note exactly where you left off. It's ideal for the creative authoring process.
 
 Here are the key features:
 

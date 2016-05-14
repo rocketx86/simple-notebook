@@ -1140,8 +1140,7 @@ gboolean trash_entry()
 {
 	FILE *fp = NULL;
 	GtkWidget *msg_dialog = NULL;
-	gchar curr_entry_display_name[MAX_NAME_LEN];
-	gchar trash_entry_display_name[MAX_NAME_LEN];
+	gchar entry_display_name[MAX_NAME_LEN];
 	gchar curr_entry_path[MAX_PATH_LEN];
 	gchar trash_entry_path[MAX_PATH_LEN];
 	GList *entry_item = NULL;
@@ -1170,7 +1169,7 @@ gboolean trash_entry()
 		section->name, G_DIR_SEPARATOR_S,
 		entry->name);
 
-	// Move entry file path
+	// Trash entry file path
 	g_snprintf(trash_entry_path, sizeof(trash_entry_path),
 		"%s%s%s%s%s%s%s.txt",
 		note_dir, G_DIR_SEPARATOR_S,
@@ -1179,13 +1178,9 @@ gboolean trash_entry()
 		entry->name);
 
 	// Set display name
-	strncpy(curr_entry_display_name, entry->name, MAX_NAME_LEN-5);
-	if(strlen(curr_entry_display_name) > 25)
-		strcpy(curr_entry_display_name+25, "...\0");
-
-	strncpy(trash_entry_display_name, entry->name, MAX_NAME_LEN-5);
-	if(strlen(trash_entry_display_name) > 25)
-		strcpy(trash_entry_display_name+25, "...\0");
+	strncpy(entry_display_name, entry->name, MAX_NAME_LEN-5);
+	if(strlen(entry_display_name) > 25)
+		strcpy(entry_display_name+25, "...\0");
 
 	// Check that new entry path is valid
 	fp = fopen(trash_entry_path, "wx");
@@ -1195,9 +1190,11 @@ gboolean trash_entry()
 
 		msg_dialog = gtk_message_dialog_new(GTK_WINDOW(main_window), GTK_DIALOG_MODAL,
 			GTK_MESSAGE_WARNING, GTK_BUTTONS_OK,
-			"Unable to trash entry \"%s\".", trash_entry_display_name);
+			"Unable to trash entry \"%s\".", entry_display_name);
 		gtk_message_dialog_format_secondary_text(GTK_MESSAGE_DIALOG(msg_dialog),
 			"Please ensure the entry name doesn't aleady exist.");
+		gtk_window_set_type_hint(GTK_WINDOW(msg_dialog), GDK_WINDOW_TYPE_HINT_MENU);
+		gtk_window_set_resizable(GTK_WINDOW(msg_dialog), FALSE);
 		gtk_window_set_title(GTK_WINDOW(msg_dialog), app_name);
 		result = gtk_dialog_run(GTK_DIALOG(msg_dialog));
 

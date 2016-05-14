@@ -35,16 +35,13 @@ Section Menu
 [SHIFT+DRAG] = Shift section up or down
 
 Entry Menu
-[SHIFT+INS] = Create entry
 [SHIFT+F9] = Create entry
 [SHIFT+F10]  = Rename entry
 [SHIFT+F11] = Copy entry
 [CTRL+DRAG] = Copy entry
 [CTRL+SHIFT+F11] = Move entry
 [CTRL+SHIFT+DRAG] = Move entry
-[SHIFT+DEL] = Trash entry
 [SHIFT+F12] = Trash entry
-[CTRL+SHIFT+DEL] = Delete entry
 [CTRL+SHIFT+F12] = Delete entry
 [BACKSPACE] = Back history
 [ALT+LEFT] = Back history

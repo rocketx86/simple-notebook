@@ -5,7 +5,7 @@ An entry's text is displayed in the text pane on the right. When an entry is sel
 The text menu has the following options:
 
 Replace Text
-The entry's text can be searched and replaced by pressing [CTRL+F], or by selecting the replace text option from the text menu. Each time the find button or the replace button is pressed within the dialog, the next text string matching the criteria is selected. When there are no more matches, a message is displayed stating that the search is complete. You may also choose to replace all the matches at once by pressing the replace all button.
+The entry's text can be searched and replaced by pressing [CTRL+R], or by selecting the replace text option from the text menu. Each time the find button or the replace button is pressed within the dialog, the next text string matching the criteria is selected. When there are no more matches, a message is displayed stating that the search is complete. You may also choose to replace all the matches at once by pressing the replace all button.
 
 Undo Change
 After making modifications to the entry's text, you can undo your change by pressing [CTRL+Z] or by selecting the undo change option on the text menu.

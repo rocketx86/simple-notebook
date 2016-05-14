@@ -674,7 +674,9 @@ gboolean clean_trash()
 
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
-	section = get_current_section_or_return_with_warning();
+
+	// Get trash section
+	section = book->trash_section;
 
 	// Get view data
 	view = book->view;

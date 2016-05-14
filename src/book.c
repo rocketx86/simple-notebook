@@ -127,7 +127,7 @@ void on_book_change(GtkNotebook *notebook, gpointer page,
 
 	// Assert master exists
 	g_assert_nonnull(master);
-
+	
 	book = master->curr_book;
 	if(book != NULL) {
 		// Write current entry
@@ -146,6 +146,9 @@ void on_book_change(GtkNotebook *notebook, gpointer page,
 
 		sn_trace("Setting notebook to [%s] on page [%d] in %s.",
 			book->name, page_num, __func__);
+	
+		// Assert book view exists
+		g_return_if_fail(book->view != NULL);
 
 		populate_sections(book);
 
@@ -159,7 +162,7 @@ void on_book_change(GtkNotebook *notebook, gpointer page,
 
 /*
  * Populate books
- * Called from main in notebook.c
+ * Called from main in main.c
  * Creates book tabs/pages for each open book
  */
 gboolean populate_books(gchar *note_dir)

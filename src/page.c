@@ -52,7 +52,7 @@ view_data* create_book_page(gpointer main_view, gpointer data)
 	gtk_notebook_append_page(GTK_NOTEBOOK(main_view), book_page, book_label);
 
 	left_pane = gtk_vpaned_new ();
-	gtk_paned_add1 (GTK_PANED (book_page), left_pane);
+	gtk_paned_add1(GTK_PANED(book_page), left_pane);
 
 	// Section View
 	section_frame = gtk_frame_new(NULL);

@@ -192,7 +192,7 @@ void on_section_change(GtkTreeView *section_view, gpointer data)
 	GtkTreeModel *section_model = NULL;
 	GtkTreeIter tree_iter;
 
-	// Get currently selected
+	// Get book from data
 	book = (book_data*)data;
 	if(book == NULL) {
 		sn_warning("No current book in %s.", __func__);
@@ -916,7 +916,7 @@ gboolean shift_section_up()
 	book = get_current_book_or_return_with_warning();
 
 	// Get section view & model
-	view = (view_data*)book->view;
+	view = book->view;
 	section_view = view->section_view;
 	section_model = gtk_tree_view_get_model(section_view);
 
@@ -980,7 +980,7 @@ gboolean shift_section_down()
 	book = get_current_book_or_return_with_warning();
 
 	// Get section view & model
-	view = (view_data*)book->view;
+	view = book->view;
 	section_view = view->section_view;
 	section_model = gtk_tree_view_get_model(section_view);
 

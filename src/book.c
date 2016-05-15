@@ -222,6 +222,9 @@ gboolean create_book()
 	page_num = g_list_index(master->book_list, book);
 	gtk_notebook_set_current_page(GTK_NOTEBOOK(main_view), page_num);
 
+	// Update master
+	write_master(master, note_dir);
+
 	// Rename book
 	rename_book();
 
@@ -247,7 +250,6 @@ gboolean rename_book()
 	gchar new_book_name[MAX_PATH_LEN];
 	gchar old_book_name[MAX_PATH_LEN];
 	book_data *book = NULL;
-	view_data *view = NULL;
 	gchar *temp_string;
 	gint result;
 
@@ -398,10 +400,9 @@ gboolean rename_book()
 		write_master(master, note_dir);
 
 		// Update view
-		view = book->view;
 		label = gtk_label_new(entry_text);
 		gtk_notebook_set_tab_label (GTK_NOTEBOOK(main_view),
-			GTK_WIDGET(view->book_page), GTK_WIDGET(label));
+			GTK_WIDGET(get_book_page(book)), GTK_WIDGET(label));
 
 		gtk_widget_destroy(name_dialog);
 		return TRUE;

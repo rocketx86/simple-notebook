@@ -145,6 +145,16 @@ view_data* create_book_page(gpointer main_view, gpointer data)
 /*
  * Get section view
  */
+GtkWidget* get_book_page(book_data *book)
+{
+	g_assert_nonnull(book);
+	g_assert_nonnull(book->view);
+	return book->view->book_page;
+}
+
+/*
+ * Get section view
+ */
 GtkTreeView* get_section_view(book_data *book)
 {
 	g_assert_nonnull(book);

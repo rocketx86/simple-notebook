@@ -375,6 +375,7 @@ gboolean rename_book()
 
 		sn_trace("Renaming notebook [%s] to [%s].", book->name, entry_text);
 
+		// Rename directory
 		rename(old_book_name, new_book_name);
 
 		// Old book index file
@@ -391,6 +392,7 @@ gboolean rename_book()
 			entry_text, G_DIR_SEPARATOR_S,
 			entry_text);
 
+		// Rename index
 		rename(old_book_name, new_book_name);
 
 		// Update book

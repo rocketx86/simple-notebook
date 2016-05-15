@@ -151,7 +151,6 @@ gboolean select_all_text()
 	GtkTextBuffer *text_buffer = NULL;
 	GtkTextIter text_start, text_end;
 	book_data *book = NULL;
-	view_data *view = NULL;
 
 	// Assert master exists
 	g_assert_nonnull(master);
@@ -159,8 +158,7 @@ gboolean select_all_text()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Select all text
@@ -180,7 +178,6 @@ gboolean cut_text()
 	GtkTextBuffer *text_buffer = NULL;
 	GtkClipboard *clipboard = NULL;
 	book_data *book = NULL;
-	view_data *view = NULL;
 	GtkTextIter text_start, text_end;
 	gchar* text = NULL;
 
@@ -190,8 +187,7 @@ gboolean cut_text()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Get selected text
@@ -219,7 +215,6 @@ gboolean copy_text()
 	GtkTextBuffer *text_buffer = NULL;
 	GtkClipboard *clipboard = NULL;
 	book_data *book = NULL;
-	view_data *view = NULL;
 
 	// Assert master exists
 	g_assert_nonnull(master);
@@ -227,8 +222,7 @@ gboolean copy_text()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Copy to clipboard
@@ -248,7 +242,6 @@ gboolean paste_text()
 	GtkTextBuffer *text_buffer = NULL;
 	GtkClipboard *clipboard = NULL;
 	book_data *book = NULL;
-	view_data *view = NULL;
 	edit_data *edit = NULL;
 	GtkTextMark *text_mark = NULL;
 	GtkTextIter text_start, text_end;
@@ -261,8 +254,7 @@ gboolean paste_text()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Get text insertion
@@ -335,7 +327,6 @@ gboolean delete_text()
 	GtkTextView *text_view = NULL;
 	GtkTextBuffer *text_buffer = NULL;
 	book_data *book = NULL;
-	view_data *view = NULL;
 	GtkTextMark *text_mark = NULL;
 	GtkTextIter text_start, text_end;
 	gchar* text = NULL;
@@ -346,8 +337,7 @@ gboolean delete_text()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Delete text
@@ -394,7 +384,6 @@ static gboolean insert_return()
 	GtkTextMark *text_mark = NULL;
 	GtkTextIter text_start, text_end;
 	book_data *book = NULL;
-	view_data *view = NULL;
 	gchar *text = NULL;
 	gboolean same_action = FALSE;
 
@@ -404,8 +393,7 @@ static gboolean insert_return()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Insert return
@@ -446,7 +434,6 @@ static gboolean insert_backspace()
 	GtkTextMark *text_mark = NULL;
 	GtkTextIter text_start, text_end;
 	book_data *book = NULL;
-	view_data *view = NULL;
 	gchar *text = NULL;
 	gboolean same_action = FALSE;
 
@@ -456,8 +443,7 @@ static gboolean insert_backspace()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Insert backspace
@@ -499,7 +485,6 @@ static gboolean insert_unicode(GdkEventKey *event)
 	GtkTextMark *text_mark = NULL;
 	GtkTextIter text_start, text_end;
 	book_data *book = NULL;
-	view_data *view = NULL;
 	gchar *text = NULL;
 	guint32 unicode = 0L;
 	gboolean same_action = FALSE;
@@ -510,8 +495,7 @@ static gboolean insert_unicode(GdkEventKey *event)
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
+	// Get text view
 	text_view = get_text_view(book);
 
 	// Insert unicode
@@ -547,21 +531,18 @@ static gboolean insert_unicode(GdkEventKey *event)
 
 /*
  * On text key press
+ * Signal handler for "key-press-event"
  */
 gboolean on_text_key_press(GtkTextView *text_view,
 					GdkEventKey *event, gpointer data)
 {
 	book_data *book = NULL;
-	view_data *view = NULL;
-
+	
 	GdkModifierType modifiers;
 	modifiers = gtk_accelerator_get_default_mod_mask ();
 
 	book = (book_data*)data;
 	g_return_val_if_fail(book != NULL, FALSE);
-
-	view = book->view;
-	g_return_val_if_fail(view != NULL, FALSE);
 
 	switch (event->keyval) {
 	case GDK_KEY_F10:
@@ -653,7 +634,6 @@ gboolean read_text(book_data *book, entry_data *entry)
 {
 	GtkTextView *text_view = NULL;
 	GtkTextBuffer *text_buffer = NULL;
-	view_data *view = NULL;
 	section_data *section = NULL;
 	gchar filename[MAX_PATH_LEN];
 	gchar *buffer = NULL;
@@ -664,7 +644,6 @@ gboolean read_text(book_data *book, entry_data *entry)
 	if (entry == NULL) {
 
 		// Get text view
-		view = book->view;
 		text_view = get_text_view(book);
 
 		// Set text buffer
@@ -736,7 +715,6 @@ gboolean read_text(book_data *book, entry_data *entry)
 		buffer[bufsize] = 0;
 
 		// Get text view
-		view = book->view;
 		text_view = get_text_view(book);
 
 		// Set text buffer in view
@@ -780,7 +758,6 @@ gboolean write_text(book_data *book, entry_data *entry)
 	GtkTextView *text_view = NULL;
 	GtkTextBuffer *text_buffer = NULL;
 	GtkTextIter start, end;
-	view_data *view = NULL;
 	section_data *section = NULL;
 
 	// Check for valid entry
@@ -788,7 +765,7 @@ gboolean write_text(book_data *book, entry_data *entry)
 		return FALSE;
 	}
 
-	//Get entry section
+	// Get entry section
 	section = entry->parent_section;
 	if (section == NULL) {
 		sn_warning0("Invalid section writing text.");
@@ -804,7 +781,6 @@ gboolean write_text(book_data *book, entry_data *entry)
 		entry->name);
 
 	// Get text buffer
-	view = book->view;
 	text_view = get_text_view(book);
 	text_buffer = gtk_text_view_get_buffer(text_view);
 
@@ -843,4 +819,4 @@ gboolean write_text(book_data *book, entry_data *entry)
 	}
 
 	return FALSE;
-} // Wrte text
+} // Write text

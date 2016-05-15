@@ -262,7 +262,6 @@ gboolean on_main_view_mouse_button_press(GtkWidget *menu,
 
 	GtkTextView *text_view = NULL;
 	book_data *book = NULL;
-	view_data *view = NULL;
 
 	GdkModifierType modifiers;
 	modifiers = gtk_accelerator_get_default_mod_mask ();
@@ -323,9 +322,8 @@ gboolean on_main_view_mouse_button_press(GtkWidget *menu,
 			// Get currently selected
 			book = get_current_book_or_return_with_warning();
 
-			// Get view data
-			view = book->view;
-			text_view = view->text_view;
+			// Get text view
+			text_view = get_text_view(book);
 
 			// Set text view focus
 			set_text_view_focus(text_view);

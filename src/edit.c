@@ -132,7 +132,6 @@ gboolean undo_text()
 	section_data *section = NULL;
 	entry_data *entry = NULL;
 	edit_data *edit = NULL;
-	view_data *view = NULL;
 	guint32 action = 0;
 
 	// Assert master exists
@@ -143,9 +142,8 @@ gboolean undo_text()
 	section = get_current_section_or_return_with_warning();
 	entry = get_current_entry_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
-	text_view = view->text_view;
+	// Get text buffer
+	text_view = get_text_view(book);
 	text_buffer = gtk_text_view_get_buffer(text_view);
 
 	// Get current edit
@@ -216,7 +214,6 @@ gboolean redo_text()
 	section_data *section = NULL;
 	entry_data *entry = NULL;
 	edit_data *edit = NULL;
-	view_data *view = NULL;
 	guint32 action = 0;
 
 	// Assert master exists
@@ -227,9 +224,8 @@ gboolean redo_text()
 	section = get_current_section_or_return_with_warning();
 	entry = get_current_entry_or_return_with_warning();
 
-	// Get view data
-	view = book->view;
-	text_view = view->text_view;
+	// Get text buffer
+	text_view = get_text_view(book);
 	text_buffer = gtk_text_view_get_buffer(text_view);
 
 	// Get prev edit
@@ -310,31 +306,31 @@ gint copy_file(const gchar *to, const gchar *from)
 	gint saved_errno;
 
 	fd_from = open(from, O_RDONLY);
-	if (fd_from < 0)
+	if(fd_from < 0)
 		return -1;
 
 	fd_to = open(to, O_WRONLY | O_CREAT | O_EXCL, 0666);
-	if (fd_to < 0)
+	if(fd_to < 0)
 		goto out_error;
 
-	while (nread = read(fd_from, buf, sizeof buf), nread > 0) {
+	while(nread = read(fd_from, buf, sizeof buf), nread > 0) {
 		char *out_ptr = buf;
 		ssize_t nwritten;
 
 		do {
 			nwritten = write(fd_to, out_ptr, nread);
 
-			if (nwritten >= 0) {
+			if(nwritten >= 0) {
 				nread -= nwritten;
 				out_ptr += nwritten;
-			} else if (errno != EINTR) {
+			} else if(errno != EINTR) {
 				goto out_error;
 			}
-		} while (nread > 0);
+		} while(nread > 0);
 	}
 
-	if (nread == 0) {
-		if (close(fd_to) < 0) {
+	if(nread == 0) {
+		if(close(fd_to) < 0) {
 			fd_to = -1;
 			goto out_error;
 		}
@@ -344,11 +340,11 @@ gint copy_file(const gchar *to, const gchar *from)
 		return 0;
 	}
 
-  out_error:
+out_error:
 	saved_errno = errno;
 
 	close(fd_from);
-	if (fd_to >= 0)
+	if(fd_to >= 0)
 		close(fd_to);
 
 	errno = saved_errno;

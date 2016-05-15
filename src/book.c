@@ -32,7 +32,6 @@ gboolean on_book_key_press(GtkNotebook *notebook,
 					GdkEventKey *event, gpointer data)
 {
 	book_data *book = NULL;
-	view_data *view = NULL;
 
 	GdkModifierType modifiers;
 	modifiers = gtk_accelerator_get_default_mod_mask();
@@ -40,26 +39,24 @@ gboolean on_book_key_press(GtkNotebook *notebook,
 	// Assert master exists
 	g_assert_nonnull(master);
 
-	book = (book_data*)master->curr_book;
+	// Get currently selected
+	book = master->curr_book;
 	g_return_val_if_fail(book != NULL, FALSE);
-
-	view = (view_data*)book->view;
-	g_return_val_if_fail(view != NULL, FALSE);
 
 	switch (event->keyval) {
 	case GDK_KEY_Up:
 		sn_trace("Up in %s", __func__);
 
-		gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
-		on_entry_key_press(view->entry_view, event, book);
+		gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
+		on_entry_key_press(get_entry_view(book), event, book);
 
 		return TRUE;
 
 	case GDK_KEY_Down:
 		sn_trace("Down in %s", __func__);
 
-		gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
-		on_entry_key_press(view->entry_view, event, book);
+		gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
+		on_entry_key_press(get_entry_view(book), event, book);
 
 		return TRUE;
 
@@ -76,8 +73,8 @@ gboolean on_book_key_press(GtkNotebook *notebook,
 		} else {
 			sn_trace("Left in %s", __func__);
 
-			gtk_widget_grab_focus(GTK_WIDGET(view->section_view));
-			on_section_key_press(view->section_view, event, book);
+			gtk_widget_grab_focus(GTK_WIDGET(get_section_view(book)));
+			on_section_key_press(get_section_view(book), event, book);
 		}
 		return TRUE;
 
@@ -95,8 +92,8 @@ gboolean on_book_key_press(GtkNotebook *notebook,
 		} else {
 			sn_trace("Right in %s", __func__);
 
-			gtk_widget_grab_focus(GTK_WIDGET(view->section_view));
-			on_section_key_press(view->section_view, event, book);
+			gtk_widget_grab_focus(GTK_WIDGET(get_section_view(book)));
+			on_section_key_press(get_section_view(book), event, book);
 		}
 		return TRUE;
 
@@ -110,7 +107,7 @@ gboolean on_book_key_press(GtkNotebook *notebook,
 			add_history();
 		} else {
 			sn_trace("Enter in %s", __func__);
-			set_text_view_focus(view->text_view);
+			set_text_view_focus(get_text_view(book));
 		}
 		return TRUE;
 	}
@@ -155,7 +152,7 @@ void on_book_change(GtkNotebook *notebook, gpointer page,
 
 		populate_sections(book);
 
-		gtk_widget_grab_focus(GTK_WIDGET(book->view->entry_view));
+		gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
 
 	} else {
 		sn_warning("No notebook found for page [%d].", page_num);

@@ -462,7 +462,6 @@ static gboolean select_history(history_data *history)
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	gboolean more = FALSE;
 
 	// Assert master exists
@@ -473,9 +472,8 @@ static gboolean select_history(history_data *history)
 
 	sn_trace0("Select history.");
 
-	// Get model and view
-	view = book->view;
-	tree_view = view->section_view;
+	// Get section model and view
+	tree_view = get_section_view(book);
 	tree_model = gtk_tree_view_get_model(tree_view);
 
 	// Find history section
@@ -491,8 +489,8 @@ static gboolean select_history(history_data *history)
 		more = gtk_tree_model_iter_next(tree_model, &tree_iter);
 	}
 
-	// Get model and view
-	tree_view = view->entry_view;
+	// Get entry model and view
+	tree_view = get_entry_view(book);
 	tree_model = gtk_tree_view_get_model(tree_view);
 
 	// Find history entry

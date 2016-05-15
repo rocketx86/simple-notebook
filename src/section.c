@@ -70,7 +70,6 @@ gboolean on_section_key_press(GtkTreeView *section_view,
 	GtkTreeViewColumn *section_column = NULL;
 	GtkTreeIter tree_iter;
 	book_data *book = NULL;
-	view_data *view = NULL;
 
 	GdkModifierType modifiers;
 	modifiers = gtk_accelerator_get_default_mod_mask();
@@ -79,28 +78,26 @@ gboolean on_section_key_press(GtkTreeView *section_view,
 	g_assert_nonnull(master);
 
 	// Get currently selected
-	book = (book_data*)master->curr_book;
+	book = master->curr_book;
 	g_return_val_if_fail(book != NULL, FALSE);
-
-	view = (view_data*)book->view;
-	g_return_val_if_fail(view != NULL, FALSE);
-
+	
+	// Get section model
 	section_model = gtk_tree_view_get_model(section_view);
 
 	switch (event->keyval) {
 	case GDK_KEY_Up:
 		sn_trace("Up in %s", __func__);
 
-		gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
-		on_entry_key_press(view->entry_view, event, data);
+		gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
+		on_entry_key_press(get_entry_view(book), event, data);
 
 		return TRUE;
 
 	case GDK_KEY_Down:
 			sn_trace("Down in %s", __func__);
 
-		gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
-		on_entry_key_press(view->entry_view, event, data);
+		gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
+		on_entry_key_press(get_entry_view(book), event, data);
 
 		return TRUE;
 
@@ -171,7 +168,7 @@ gboolean on_section_key_press(GtkTreeView *section_view,
 			add_history();
 		} else {
 			sn_trace("Enter in %s", __func__);
-			set_text_view_focus(view->text_view);
+			set_text_view_focus(get_text_view(book));
 		}
 		return TRUE;
 	}
@@ -240,11 +237,9 @@ gboolean populate_sections(book_data *book)
 	GtkTreeSelection *selection = NULL;
 	GtkTreeIter tree_iter;
 	section_data *section = NULL;
-	view_data *view = NULL;
 
 	// Get section view
-	view = book->view;
-	section_view = view->section_view;
+	section_view = get_section_view(book);
 
 	// Create new section model
 	section_model = create_section_model(book);
@@ -391,7 +386,6 @@ gboolean create_section()
 	section_data *curr_section = NULL;
 	book_data *book = NULL;
 	section_data *section = NULL;
-	view_data *view = NULL;
 	gint cindex = 0;
 
 	// Assert master exists
@@ -424,8 +418,7 @@ gboolean create_section()
 	section->parent_book = book;
 
 	// Get selected section
-	view = book->view;
-	section_view = view->section_view;
+	section_view = get_section_view(book);
 	section_model = gtk_tree_view_get_model(section_view);
 	selection = gtk_tree_view_get_selection(section_view);
 
@@ -477,7 +470,6 @@ gboolean rename_section()
 	gchar old_section_name[MAX_PATH_LEN];
 	book_data *book = NULL;
 	section_data *section = NULL;
-	view_data *view = NULL;
 	gchar *temp_string;
 	gint result;
 
@@ -639,9 +631,8 @@ gboolean rename_section()
 			write_book(book, note_dir);
 
 			// Update view
-			view = book->view;
 			populate_sections(book);
-			on_section_change(view->section_view, book);
+			on_section_change(get_section_view(book), book);
 
 			gtk_widget_destroy(name_dialog);
 			return TRUE;
@@ -672,7 +663,6 @@ gboolean clean_trash()
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	gint result;
 
 	// Assert master exists
@@ -683,9 +673,6 @@ gboolean clean_trash()
 
 	// Get trash section
 	section = book->trash_section;
-
-	// Get view data
-	view = book->view;
 
 	// Confirm clean trash action
 	msg_dialog = gtk_message_dialog_new(GTK_WINDOW(main_window), GTK_DIALOG_MODAL,
@@ -738,7 +725,7 @@ gboolean clean_trash()
 		// Update view
 		populate_sections(book);
 		
-		gtk_widget_grab_focus(GTK_WIDGET(view->section_view));
+		gtk_widget_grab_focus(GTK_WIDGET(get_section_view(book)));
 		gtk_widget_destroy(msg_dialog);
 		return TRUE;
 
@@ -762,7 +749,6 @@ gboolean delete_section()
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	gint result;
 
 	// Assert master exists
@@ -771,9 +757,6 @@ gboolean delete_section()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 	section = get_current_section_or_return_with_warning();
-
-	// Get view data
-	view = book->view;
 
 	// Check for trash section
 	if(book->trash_section == section) {
@@ -876,7 +859,7 @@ gboolean delete_section()
 
 			// Update view
 			populate_sections(book);
-			gtk_widget_grab_focus(GTK_WIDGET(view->section_view));
+			gtk_widget_grab_focus(GTK_WIDGET(get_section_view(book)));
 			gtk_widget_destroy(msg_dialog);
 			return TRUE;
 
@@ -906,7 +889,6 @@ gboolean shift_section_up()
 	GtkTreeIter section_iter;
 	book_data *book = NULL;
 	section_data *section = NULL;
-	view_data *view = NULL;
 	guint section_index = 0;
 
 	// Assert master exists
@@ -915,9 +897,8 @@ gboolean shift_section_up()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get section view & model
-	view = book->view;
-	section_view = view->section_view;
+	// Get section model and view
+	section_view = get_section_view(book);
 	section_model = gtk_tree_view_get_model(section_view);
 
 	sn_trace0("Shifting section up.");
@@ -970,7 +951,6 @@ gboolean shift_section_down()
 	GtkTreeIter section_iter;
 	book_data *book = NULL;
 	section_data *section = NULL;
-	view_data *view = NULL;
 	guint section_index = 0;
 
 	// Assert master exists
@@ -979,9 +959,8 @@ gboolean shift_section_down()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
-	// Get section view & model
-	view = book->view;
-	section_view = view->section_view;
+	// Get section model and view
+	section_view = get_section_view(book);
 	section_model = gtk_tree_view_get_model(section_view);
 
 	sn_trace0("Shifting section down.");

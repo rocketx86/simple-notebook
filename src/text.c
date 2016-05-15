@@ -161,7 +161,7 @@ gboolean select_all_text()
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Select all text
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -192,7 +192,7 @@ gboolean cut_text()
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Get selected text
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -229,7 +229,7 @@ gboolean copy_text()
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Copy to clipboard
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -263,7 +263,7 @@ gboolean paste_text()
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Get text insertion
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -348,7 +348,7 @@ gboolean delete_text()
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Delete text
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -406,7 +406,7 @@ static gboolean insert_return()
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Insert return
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -458,7 +458,7 @@ static gboolean insert_backspace()
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Insert backspace
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -512,7 +512,7 @@ static gboolean insert_unicode(GdkEventKey *event)
 
 	// Get view data
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 
 	// Insert unicode
 	text_buffer = gtk_text_view_get_buffer(text_view);
@@ -568,13 +568,13 @@ gboolean on_text_key_press(GtkTextView *text_view,
 		if((event->state & modifiers) == GDK_SHIFT_MASK) {
 			sn_trace("Shift+F10 in %s", __func__);
 			write_current_entry();
-			gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
-			on_entry_key_press(view->entry_view, event, data);
+			gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
+			on_entry_key_press(get_entry_view(book), event, data);
 		} else {
 			sn_trace("F10 in %s", __func__);
 			write_current_entry();
-			gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
-			on_entry_key_press(view->entry_view, event, data);
+			gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
+			on_entry_key_press(get_entry_view(book), event, data);
 		}
 		return TRUE;
 
@@ -584,7 +584,7 @@ gboolean on_text_key_press(GtkTextView *text_view,
 		if((event->state & modifiers) & GDK_SHIFT_MASK) {
 			sn_trace("Shift+Enter in %s", __func__);
 			write_current_entry();
-			gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
+			gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
 			return TRUE;
 		} else {
 			insert_return();
@@ -665,7 +665,7 @@ gboolean read_text(book_data *book, entry_data *entry)
 
 		// Get text view
 		view = book->view;
-		text_view = view->text_view;
+		text_view = get_text_view(book);
 
 		// Set text buffer
 		text_buffer = gtk_text_view_get_buffer(text_view);
@@ -737,7 +737,7 @@ gboolean read_text(book_data *book, entry_data *entry)
 
 		// Get text view
 		view = book->view;
-		text_view = view->text_view;
+		text_view = get_text_view(book);
 
 		// Set text buffer in view
 		text_buffer = gtk_text_view_get_buffer(text_view);
@@ -805,7 +805,7 @@ gboolean write_text(book_data *book, entry_data *entry)
 
 	// Get text buffer
 	view = book->view;
-	text_view = view->text_view;
+	text_view = get_text_view(book);
 	text_buffer = gtk_text_view_get_buffer(text_view);
 
 	// Check current buffer name

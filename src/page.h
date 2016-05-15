@@ -31,5 +31,8 @@ typedef struct _view_data {
 } view_data;
 
 extern view_data* create_book_page (gpointer main_view, gpointer data);
+extern GtkTreeView* get_section_view(book_data *book);
+extern GtkTreeView* get_entry_view(book_data *book);
+extern GtkTextView* get_text_view(book_data *book);
 
 #endif //__SN_PAGE_H__

@@ -78,18 +78,15 @@ gboolean on_entry_key_press(GtkTreeView *entry_view,
 	GtkTreeViewColumn *entry_column = NULL;
 	GtkTreeIter tree_iter;
 	book_data *book = NULL;
-	view_data *view = NULL;
 
 	GdkModifierType modifiers;
 	modifiers = gtk_accelerator_get_default_mod_mask();
 
 	// Get currently selected
-	book = (book_data*)master->curr_book;
+	book = master->curr_book;
 	g_return_val_if_fail(book != NULL, FALSE);
-
-	view = (view_data*)book->view;
-	g_return_val_if_fail(view != NULL, FALSE);
-
+	
+	// Get entry model
 	entry_model = gtk_tree_view_get_model(entry_view);
 
 	switch (event->keyval) {
@@ -148,8 +145,8 @@ gboolean on_entry_key_press(GtkTreeView *entry_view,
 		} else {
 			sn_trace("Left in %s", __func__);
 
-			gtk_widget_grab_focus(GTK_WIDGET(view->section_view));
-			on_section_key_press(view->section_view, event, data);
+			gtk_widget_grab_focus(GTK_WIDGET(get_section_view(book)));
+			on_section_key_press(get_section_view(book), event, data);
 		}
 		return TRUE;
 
@@ -163,8 +160,8 @@ gboolean on_entry_key_press(GtkTreeView *entry_view,
 		} else {
 			sn_trace("Right in %s", __func__);
 
-			gtk_widget_grab_focus(GTK_WIDGET(view->section_view));
-			on_section_key_press(view->section_view, event, data);
+			gtk_widget_grab_focus(GTK_WIDGET(get_section_view(book)));
+			on_section_key_press(get_section_view(book), event, data);
 		}
 		return TRUE;
 
@@ -178,7 +175,7 @@ gboolean on_entry_key_press(GtkTreeView *entry_view,
 			add_history();
 		} else {
 			sn_trace("Enter in %s", __func__);
-			set_text_view_focus(view->text_view);
+			set_text_view_focus(get_text_view(book));
 		}
 		return TRUE;
 	}
@@ -254,11 +251,9 @@ gboolean populate_entries(book_data *book, section_data *section)
 	GtkTreeSelection *selection = NULL;
 	GtkTreeIter tree_iter;
 	entry_data *entry = NULL;
-	view_data* view = NULL;
 
 	// Get entry view
-	view = book->view;
-	entry_view = view->entry_view;
+	entry_view = get_entry_view(book);
 
 	// Create new entry model
 	entry_model = create_entry_model(section);
@@ -538,7 +533,6 @@ gboolean create_entry()
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	gint cindex = 0;
 
 	// Assert master exists
@@ -577,8 +571,7 @@ gboolean create_entry()
 	entry->parent_section = section;
 
 	// Get selected entry
-	view = book->view;
-	entry_view = view->entry_view;
+	entry_view = get_entry_view(book);
 	entry_model = gtk_tree_view_get_model(entry_view);
 	selection = gtk_tree_view_get_selection(entry_view);
 
@@ -602,7 +595,7 @@ gboolean create_entry()
 	on_entry_change(entry_view, book);
 
 	// Set text focus
-	set_text_view_focus(view->text_view);
+	set_text_view_focus(get_text_view(book));
 
 	// Name entry
 	if(options.auto_name_entry == TRUE) {
@@ -635,7 +628,6 @@ gboolean rename_entry()
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	gchar *temp_string;
 	gint result;
 
@@ -646,9 +638,6 @@ gboolean rename_entry()
 	book = get_current_book_or_return_with_warning();
 	section = get_current_section_or_return_with_warning();
 	entry = get_current_entry_or_return_with_warning();
-
-	// Get view data
-	view = book->view;
 
 	// Write current entry
 	write_current_entry();
@@ -670,7 +659,7 @@ gboolean rename_entry()
 	if(options.auto_name_entry == TRUE) {
 
 		temp_string = g_malloc0(MAX_NAME_LEN);
-		strdelchr(temp_string, get_auto_entry_name(view->text_view), ILLEGAL_CHARS);
+		strdelchr(temp_string, get_auto_entry_name(get_text_view(book)), ILLEGAL_CHARS);
 		temp_string[MAX_NAME_LEN-5] = 0;
 		if(strcmp(temp_string, "") == 0)
 			gtk_entry_set_text(GTK_ENTRY(name_entry), entry->name);
@@ -806,7 +795,7 @@ gboolean rename_entry()
 
 			// Update view
 			populate_entries(book, section);
-			on_entry_change(view->entry_view, book);
+			on_entry_change(get_entry_view(book), book);
 
 			gtk_widget_destroy(name_dialog);
 			return TRUE;
@@ -1290,7 +1279,6 @@ gboolean delete_entry()
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	gint result;
 
 	// Assert master exists
@@ -1300,9 +1288,6 @@ gboolean delete_entry()
 	book = get_current_book_or_return_with_warning();
 	section = get_current_section_or_return_with_warning();
 	entry = get_current_entry_or_return_with_warning();
-
-	// Get view data
-	view = book->view;
 
 	// Set display name
 	strncpy(entry_display_name, entry->name, MAX_NAME_LEN-5);
@@ -1358,7 +1343,7 @@ gboolean delete_entry()
 
 			// Update view
 			populate_entries(book, section);
-			gtk_widget_grab_focus(GTK_WIDGET(view->entry_view));
+			gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
 			gtk_widget_destroy(msg_dialog);
 			return TRUE;
 
@@ -1389,7 +1374,6 @@ gboolean shift_entry_up()
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	guint entry_index = 0;
 
 	// Assert master exists
@@ -1399,9 +1383,8 @@ gboolean shift_entry_up()
 	book = get_current_book_or_return_with_warning();
 	section = get_current_section_or_return_with_warning();
 
-	// Get entry view & model
-	view = (view_data*)book->view;
-	entry_view = view->entry_view;
+	// Get entry model and view
+	entry_view = get_entry_view(book);
 	entry_model = gtk_tree_view_get_model(entry_view);
 
 	sn_trace0("Shifting entry up.");
@@ -1455,7 +1438,6 @@ gboolean shift_entry_down()
 	book_data *book = NULL;
 	section_data *section = NULL;
 	entry_data *entry = NULL;
-	view_data *view = NULL;
 	guint entry_index = 0;
 
 	// Assert master exists
@@ -1465,9 +1447,8 @@ gboolean shift_entry_down()
 	book = get_current_book_or_return_with_warning();
 	section = get_current_section_or_return_with_warning();
 
-	// Get entry view & model
-	view = (view_data*)book->view;
-	entry_view = view->entry_view;
+	// Get entry model and view
+	entry_view = get_entry_view(book);
 	entry_model = gtk_tree_view_get_model(entry_view);
 
 	sn_trace0("Shifting entry down.");

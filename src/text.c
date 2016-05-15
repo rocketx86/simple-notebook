@@ -536,13 +536,14 @@ static gboolean insert_unicode(GdkEventKey *event)
 gboolean on_text_key_press(GtkTextView *text_view,
 					GdkEventKey *event, gpointer data)
 {
-	book_data *book = NULL;
-	
 	GdkModifierType modifiers;
-	modifiers = gtk_accelerator_get_default_mod_mask ();
+	book_data *book = NULL;
 
-	book = (book_data*)data;
-	g_return_val_if_fail(book != NULL, FALSE);
+	// Get currently selected
+	book = get_current_book_or_return_with_warning();
+
+	// Get default modifiers
+	modifiers = gtk_accelerator_get_default_mod_mask();
 
 	switch (event->keyval) {
 	case GDK_KEY_F10:

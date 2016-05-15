@@ -31,17 +31,17 @@ static const gchar *default_book_name = "Notebook";
 gboolean on_book_key_press(GtkNotebook *notebook,
 					GdkEventKey *event, gpointer data)
 {
-	book_data *book = NULL;
-
 	GdkModifierType modifiers;
-	modifiers = gtk_accelerator_get_default_mod_mask();
+	book_data *book = NULL;
 
 	// Assert master exists
 	g_assert_nonnull(master);
 
 	// Get currently selected
-	book = master->curr_book;
-	g_return_val_if_fail(book != NULL, FALSE);
+	book = get_current_book_or_return_with_warning();
+
+	// Get default modifiers
+	modifiers = gtk_accelerator_get_default_mod_mask();
 
 	switch (event->keyval) {
 	case GDK_KEY_Up:

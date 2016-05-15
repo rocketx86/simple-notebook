@@ -69,20 +69,20 @@ gboolean on_section_key_press(GtkTreeView *section_view,
 	GtkTreeModel *section_model = NULL;
 	GtkTreeViewColumn *section_column = NULL;
 	GtkTreeIter tree_iter;
-	book_data *book = NULL;
-
 	GdkModifierType modifiers;
-	modifiers = gtk_accelerator_get_default_mod_mask();
+	book_data *book = NULL;
 
 	// Assert master exists
 	g_assert_nonnull(master);
 
 	// Get currently selected
-	book = master->curr_book;
-	g_return_val_if_fail(book != NULL, FALSE);
-	
+	book = get_current_book_or_return_with_warning();
+
 	// Get section model
 	section_model = gtk_tree_view_get_model(section_view);
+
+	// Get default modifiers
+	modifiers = gtk_accelerator_get_default_mod_mask();
 
 	switch (event->keyval) {
 	case GDK_KEY_Up:

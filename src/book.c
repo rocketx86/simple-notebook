@@ -150,7 +150,7 @@ void on_book_change(GtkNotebook *notebook, gpointer page,
 		sn_trace("Setting notebook to [%s] on page [%d] in %s.",
 			book->name, page_num, __func__);
 	
-		// Assert book view exists
+		// Return if book view doesn't exist
 		g_return_if_fail(book->view != NULL);
 
 		populate_sections(book);

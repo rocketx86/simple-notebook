@@ -200,8 +200,12 @@ void on_entry_change(GtkTreeView *entry_view, gpointer data)
 	GtkTreeModel *entry_model = NULL;
 	GtkTreeIter tree_iter;
 
-	// Get currently selected
+	// Get book from data
 	book = (book_data*)data;
+	if(book == NULL) {
+		sn_warning("No current book in %s.", __func__);
+		return;
+	}
 
 	// Write text of previous entry
 	write_current_entry();

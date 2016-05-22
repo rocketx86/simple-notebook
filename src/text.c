@@ -546,20 +546,6 @@ gboolean on_text_key_press(GtkTextView *text_view,
 	modifiers = gtk_accelerator_get_default_mod_mask();
 
 	switch (event->keyval) {
-	case GDK_KEY_F10:
-		if((event->state & modifiers) == GDK_SHIFT_MASK) {
-			sn_trace("Shift+F10 in %s", __func__);
-			write_current_entry();
-			gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
-			on_entry_key_press(get_entry_view(book), event, data);
-		} else {
-			sn_trace("F10 in %s", __func__);
-			write_current_entry();
-			gtk_widget_grab_focus(GTK_WIDGET(get_entry_view(book)));
-			on_entry_key_press(get_entry_view(book), event, data);
-		}
-		return TRUE;
-
 	case GDK_KEY_Return:
 		/* no break */
 	case GDK_KEY_KP_Enter:

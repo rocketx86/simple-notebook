@@ -451,8 +451,6 @@ GtkWidget* create_main_menu (void)
 	// Text menu accelerators
 	gtk_widget_add_accelerator(replaceTextMi, "activate", accel_group,
 						GDK_r, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-	gtk_widget_add_accelerator(selectTextMi, "activate", accel_group,
-						GDK_a, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(undoTextMi, "activate", accel_group,
 						GDK_z, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
 	gtk_widget_add_accelerator(redoTextMi, "activate", accel_group,

@@ -144,6 +144,7 @@ static void convert_eol_to_crlf(GtkTextBuffer *text_buffer)
 
 /*
  * Select all text
+ * Signal handler for "activate" select all
  */
 gboolean select_all_text()
 {
@@ -171,6 +172,7 @@ gboolean select_all_text()
 
 /*
  * Cut text
+ * Signal handler for "activate" cut text
  */
 gboolean cut_text()
 {
@@ -208,6 +210,7 @@ gboolean cut_text()
 
 /*
  * Copy text
+ * Signal handler for "activate" copy text
  */
 gboolean copy_text()
 {
@@ -235,6 +238,7 @@ gboolean copy_text()
 
 /*
  * Paste text
+ * Signal handler for "activate" paste text
  */
 gboolean paste_text()
 {
@@ -288,6 +292,7 @@ gboolean paste_text()
 
 /*
  * On paste done
+ * Signal handler for "paste-done" set in page.c
  */
 void on_paste_done(GtkTextBuffer *text_buffer, GtkClipboard *clipboard,
 					gpointer user_data)
@@ -321,6 +326,7 @@ void on_paste_done(GtkTextBuffer *text_buffer, GtkClipboard *clipboard,
 
 /*
  * Delete text
+ * Signal handler for "activate" delete text
  */
 gboolean delete_text()
 {
@@ -376,6 +382,8 @@ gboolean delete_text()
 
 /*
  * Insert return
+ * Key handler for return
+ * Called from on_text_key_press in text.c
  */
 static gboolean insert_return()
 {
@@ -426,6 +434,8 @@ static gboolean insert_return()
 
 /*
  * Insert backspace
+ * Key handler for backspace
+ * Called from on_text_key_press in text.c
  */
 static gboolean insert_backspace()
 {
@@ -477,6 +487,8 @@ static gboolean insert_backspace()
 
 /*
  * Insert unicode
+ * Key handler for most alpha keys
+ * Called from on_text_key_press in text.c
  */
 static gboolean insert_unicode(GdkEventKey *event)
 {
@@ -736,6 +748,7 @@ gboolean read_text(book_data *book, entry_data *entry)
 
 /*
  * Write text
+ * Called from write_current_entry in entry.c
  */
 gboolean write_text(book_data *book, entry_data *entry)
 {

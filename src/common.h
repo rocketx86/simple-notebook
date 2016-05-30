@@ -27,6 +27,7 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
+#include <gmime/gmime.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <dirent.h>

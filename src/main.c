@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
 
 	// Init Gtk framework
 	gtk_init(&argc, &argv);
+	g_mime_init (0);
 
 	// Create main window
 	main_window = create_main_window();

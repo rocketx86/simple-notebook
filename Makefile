@@ -57,13 +57,13 @@ all: $(BINDIR)/$(TARGET)
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	@$(mkdir) $(BINDIR)
-	@$(LD) $(LFLAGS) -o $@ $(OBJECTS) `pkg-config --libs gtk+-2.0`
+	@$(LD) $(LFLAGS) -o $@ $(OBJECTS) `pkg-config --libs gtk+-2.0 gmime-2.6`
 	@objdump -xdS $@ > $@.disasm
 	@echo "Linking '$@' complete!"
 
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPENDS)
 	@$(mkdir) $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@ `pkg-config --cflags gtk+-2.0`
+	@$(CC) $(CFLAGS) -c $< -o $@ `pkg-config --cflags gtk+-2.0 gmime-2.6`
 	@echo "Compiled '$<' successfully!"
 
 .PHONEY: clean

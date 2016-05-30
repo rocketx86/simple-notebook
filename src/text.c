@@ -27,7 +27,6 @@ static gchar current_buffer_name[MAX_PATH_LEN];
 static gboolean insert_return(void);
 static gboolean insert_backspace(void);
 static gboolean insert_unicode(GdkEventKey *event);
-static void convert_eol_to_crlf(GtkTextBuffer *text_buffer);
 
 /*
  * On text view focus
@@ -84,63 +83,6 @@ gchar* strdelchr(gchar *dst, const gchar *src, const gchar *del)
 	return dst;
 } // String delete characters
 
-/*
- * Convert eol to win
- */
-static void convert_eol_to_crlf(GtkTextBuffer *text_buffer)
-{
-	GtkTextIter text_start, text_end;
-	gboolean carriage = FALSE;
-	gchar *text = NULL;
-	edit_data *edit = NULL;
-	gchar code = 0;
-
-	gtk_text_buffer_get_iter_at_offset(text_buffer, &text_start, 0);
-
-	while(gtk_text_iter_forward_char(&text_start)) {
-
-		code = gtk_text_iter_get_char(&text_start);
-
-		if(code == '\r' && carriage == FALSE) {
-			carriage = TRUE;
-		}
-		else if(code == '\n' && carriage == FALSE) {
-
-			gtk_text_buffer_insert(text_buffer, &text_start, "\r", NEW_INSTANCE);
-			text_end = text_start;
-			gtk_text_iter_backward_char(&text_start);
-
-			text = gtk_text_buffer_get_text(text_buffer, &text_start, &text_end, FALSE);
-			edit = add_edit(new_edit(edit_insert, &text_start, &text_end, text, TRUE));
-
-			sn_trace("Insert 0x0D at offset [%i-%i] in %s.",
-				edit->edit_start, edit->edit_end, __func__);
-
-			text_start = text_end;
-			carriage = FALSE;
-		}
-		else if(code != '\n' && carriage == TRUE) {
-
-			gtk_text_buffer_insert(text_buffer, &text_start, "\n", NEW_INSTANCE);
-			text_end = text_start;
-			gtk_text_iter_backward_char(&text_start);
-
-			text = gtk_text_buffer_get_text(text_buffer, &text_start, &text_end, FALSE);
-			edit = add_edit(new_edit(edit_insert, &text_start, &text_end, text, TRUE));
-
-			sn_trace("Insert 0x0A at offset [%i-%i] in %s.",
-				edit->edit_start, edit->edit_end, __func__);
-
-			text_start = text_end;
-			carriage = FALSE;
-		}
-		else {
-			carriage = FALSE;
-		}
-	}
-	current_buffer_name[0] = 0;
-	return;
-} // Convert eol to win
 
 /*
  * Select all text
@@ -759,6 +701,9 @@ gboolean write_text(book_data *book, entry_data *entry)
 	GtkTextBuffer *text_buffer = NULL;
 	GtkTextIter start, end;
 	section_data *section = NULL;
+	GMimeStream *stream = NULL;
+	GMimeStream *fstream = NULL;
+	GMimeFilter *filter = NULL;
 
 	// Check for valid entry
 	if (entry == NULL) {
@@ -793,23 +738,32 @@ gboolean write_text(book_data *book, entry_data *entry)
 		}
 	}
 
-	// Convert eol to CRLF
-	convert_eol_to_crlf(text_buffer);
-
 	// Open text file
 	fp = fopen(filename, "w");
 	if (fp != NULL) {
-
-		// Get text
+		
+		// Get text from buffer
 		gtk_text_buffer_set_modified(text_buffer, FALSE);
 		gtk_text_buffer_get_start_iter(text_buffer, &start);
 		gtk_text_buffer_get_end_iter(text_buffer, &end);
 		text = gtk_text_buffer_get_text(text_buffer, &start, &end, FALSE);
 
-		// Write file
-		fputs(text, fp);
-		fputs("\00", fp);
+		// Create filtered file stream
+		stream = g_mime_stream_file_new(fp);
+		fstream = g_mime_stream_filter_new(stream);
+		filter = g_mime_filter_crlf_new(TRUE, FALSE);
+		g_mime_stream_filter_add((GMimeStreamFilter*)fstream, filter);
+		g_object_unref(filter);
 
+		// Write to stream
+		g_mime_stream_write_string(fstream, text);
+		g_mime_stream_flush(fstream);
+		g_mime_stream_write_string(stream, "\00");
+		g_mime_stream_flush(stream);
+
+		// Free stream
+		g_object_unref(fstream);
+		
 		g_free(text);
 		fclose(fp);
 		return TRUE;

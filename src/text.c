@@ -705,8 +705,15 @@ gboolean write_text(book_data *book, entry_data *entry)
 	GMimeStream *fstream = NULL;
 	GMimeFilter *filter = NULL;
 
+	// Check for valid book
+	if (book == NULL) {
+		sn_warning0("Invalid book writing text.");
+		return FALSE;
+	}
+
 	// Check for valid entry
 	if (entry == NULL) {
+		sn_warning0("Invalid entry writing text.");
 		return FALSE;
 	}
 

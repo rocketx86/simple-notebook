@@ -403,7 +403,7 @@ gboolean rename_book()
 
 		// Update view
 		label = gtk_label_new(entry_text);
-		gtk_notebook_set_tab_label (GTK_NOTEBOOK(main_view),
+		gtk_notebook_set_tab_label(GTK_NOTEBOOK(main_view),
 			GTK_WIDGET(get_book_page(book)), GTK_WIDGET(label));
 
 		gtk_widget_destroy(name_dialog);

@@ -29,6 +29,12 @@ Download the source code for project and create the sub-directory simple-noteboo
 	$ git clone https://github.com/rocketx86/simple-notebook
 ```
 
+**Dependencies**
+Install build dependencies from your GNU/Linux distribution's repository.
+```
+	$ sudo apt install libgtk2.0-dev
+	$ sudo apt install libgmime-2.6-dev
+
 **Build**  
 Change to sub-directory, clean test data, and compile and link the application. 
 ```

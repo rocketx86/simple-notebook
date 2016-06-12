@@ -53,7 +53,7 @@ master_data* new_master(gchar *note_dir)
 
 	// Open index file
 	fp = fopen(filename, "w");
-	if (fp != NULL) {
+	if(fp != NULL) {
 
 		// Create master
 		master = g_new0(master_data, NEW_INSTANCE);
@@ -61,7 +61,7 @@ master_data* new_master(gchar *note_dir)
 
 		sn_trace("Creating master [%s].", master->name);
 
-		// Write to file
+		// Write master
 		fprintf(fp, "%s\r\n", master->name);
 		fclose(fp);
 		return master;
@@ -95,12 +95,13 @@ master_data* read_master(gchar *note_dir)
 
 	// Open master file
 	fp = fopen(filename, "r");
-	if (fp != NULL) {
+	if(fp != NULL) {
 
 		// Read header
 		buffer = g_malloc0(bufsize);
 		num_read = getline(&buffer, &bufsize, fp);
 
+		// Check header
 		if(num_read > 1) {
 			buffer[num_read-2] = 0; // Strip CR LF
 			if(strcmp(buffer, file_header)) {
@@ -119,6 +120,7 @@ master_data* read_master(gchar *note_dir)
 
 			// Check for length
 			if(num_read > MAX_NAME_LEN-3 || num_read < 3) {
+				
 				// Get next line
 				num_read = getline(&buffer, &bufsize, fp);
 				continue;
@@ -133,13 +135,12 @@ master_data* read_master(gchar *note_dir)
 				book->is_open = TRUE;
 				master->open_count++;
 
-				// Is this the first found?
+				// Is this the first open book found?
 				if(open_found == FALSE) {
 					master->curr_book = book;
 				}
 				open_found = TRUE;
-			}
-			else {
+			} else {
 				buffer[num_read-2] = 0;
 				book->is_open = FALSE;
 			}
@@ -147,7 +148,7 @@ master_data* read_master(gchar *note_dir)
 			// Update book name
 			strncpy(book->name, buffer, MAX_NAME_LEN-5);
 
-			// Update master list
+			// Update book list
 			master->book_list = g_list_append(master->book_list, book);
 			master->book_count++;
 
@@ -189,7 +190,7 @@ gboolean write_master(master_data *master, gchar *note_dir)
 
 	// Open master index file
 	fp = fopen(filename, "w");
-	if (fp != NULL) {
+	if(fp != NULL) {
 
 		// Write master
 		fprintf(fp, "%s\r\n", file_header);

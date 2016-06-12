@@ -55,7 +55,7 @@
 #define NEW_INSTANCE 1
 #define ILLEGAL_CHARS "/\\:*?\"><|"
 
-#define __SN_TRACE_ON__ 1
+#define __SN_TRACE_ON__ 0
 
 #define sn_trace0(msg) \
 	do { if (__SN_TRACE_ON__) g_message("%s:%d: " msg, \

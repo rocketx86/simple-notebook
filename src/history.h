@@ -1,5 +1,5 @@
 /*
- * Simple notebook
+ * Simple Notebook
  * history.h
  *
  * Copyright 2016 Roy Richardson <rocketx86@users.github.com>

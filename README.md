@@ -47,11 +47,11 @@ Change to sub-directory, clean test data, and compile and link the application.
 **Test**  
 Run the application with local test notebook and resources.
 ```
-	$ bin/notebook -d ./test -r ./res
+	$ bin/simple-notebook -d ./test -r ./res
 ```
 
 **Install**  
-Install the application into /usr/local/bin and resources into /usr/local/share.
+Install the application into /usr/bin and resources into /usr/share.
 ```
 	$ sudo make install
 ```
@@ -65,15 +65,15 @@ Create default user notebook in $(HOME)/.simple-notebook and desktop launcher.
 **Run**  
 Run from the installation directory opening default user notebook.
 ```
-	$ /usr/local/bin/simple-notebook/notebook
+	$ /usr/bin/simple-notebook
 ```
 Run from the installation directory opening custom notebook.
 ```
-	$ /usr/local/bin/simple-notebook/notebook -d /path/to/notebook
+	$ /usr/bin/simple-notebook -d /path/to/notebook
 ```
 
 **Uninstall**  
-Uninstall the application from /usr/local/bin and /usr/local/share.
+Uninstall the application from /usr/bin and /usr/share.
 ```
 	$ sudo make uninstall
 ```

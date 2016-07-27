@@ -24,7 +24,7 @@
 
 #define DEFAULT_NOTE_DIR ".simple-notebook"
 #define DEFAULT_CONF_DIR ".config/simple-notebook"
-#define DEFAULT_RES_DIR "/usr/local/share/pixmaps/simple-notebook"
+#define DEFAULT_RES_DIR "/usr/share/simple-notebook"
 
 const gchar *app_name = "Simple Notebook";
 options_data options = {

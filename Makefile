@@ -19,7 +19,7 @@
 #
 
 
-TARGET   = notebook
+TARGET   = simple-notebook
 
 CC       = gcc
 CFLAGS   = -Wall -g -std=gnu11
@@ -34,8 +34,8 @@ RESDIR   = res
 DOCDIR   = doc
 TESTDIR  = test
 
-BINDEST  = /usr/local/bin/simple-notebook
-RESDEST  = /usr/local/share/pixmaps/simple-notebook
+BINDEST  = /usr/bin/
+RESDEST  = /usr/share/simple-notebook
 
 DEPENDS  := $(wildcard $(SRCDIR)/*.h)
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
@@ -86,7 +86,6 @@ user:
 
 .PHONEY: install
 install:
-	@$(mkdir) $(BINDEST)
 	@$(cp) $(BINDIR)/$(TARGET) $(BINDEST)
 	@$(mkdir) $(RESDEST)
 	@$(cp) $(PIXSRC) $(RESDEST)
@@ -98,5 +97,4 @@ uninstall:
 	@$(rm) $(PIXFILZ) $(PNGFILZ)
 	@$(rmd) $(RESDEST)
 	@$(rm) $(BINDEST)/$(TARGET)
-	@$(rmd) $(BINDEST)
 	@echo "Notebook uninstalled!"

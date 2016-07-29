@@ -549,7 +549,9 @@ gboolean create_entry()
 	book = get_current_book_or_return_with_warning();
 	section = get_current_section_or_return_with_warning();
 
+	// Create new entry filename
 	while (++cindex < MAX_TRIES) {
+	
 		// Create entry name
 		g_snprintf(entry_name, sizeof(entry_name), "%s%d",
 			default_entry_name, cindex);

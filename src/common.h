@@ -55,14 +55,14 @@
 #define NEW_INSTANCE 1
 #define ILLEGAL_CHARS "/\\:*?\"><|"
 
-#define __SN_TRACE_ON__ 0
+#define SN_TRACE_ON TRUE
 
 #define sn_trace0(msg) \
-	do { if (__SN_TRACE_ON__) g_message("%s:%d: " msg, \
+	do { if (SN_TRACE_ON) g_message("%s:%d: " msg, \
 		__FILE__, __LINE__); } while (0)
 
 #define sn_trace(fmt, ...) \
-	do { if (__SN_TRACE_ON__) g_message("%s:%d: " fmt, \
+	do { if (SN_TRACE_ON) g_message("%s:%d: " fmt, \
 		__FILE__, __LINE__, __VA_ARGS__); } while (0)
 
 #define sn_warning0(msg) \

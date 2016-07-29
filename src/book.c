@@ -606,8 +606,9 @@ book_data* new_book(master_data* master, gchar* note_dir)
 		write_book(master->curr_book, note_dir);
 	}
 
-	// Create book directory
+	// Create new book directory
 	while (++cindex < MAX_TRIES) {
+	
 		// Create book name
 		g_snprintf(book_name, sizeof(book_name), "%s%d",
 			default_book_name, cindex);

@@ -394,7 +394,9 @@ gboolean create_section()
 	// Get currently selected
 	book = get_current_book_or_return_with_warning();
 
+	// Create new section filename
 	while (++cindex < MAX_TRIES) {
+	
 		// Create section name
 		g_snprintf(section_name, sizeof(section_name), "%s%d",
 			default_section_name, cindex);
